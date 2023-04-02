@@ -4,25 +4,27 @@ import CartItem from './CartItem/CartItem';
 
 import { styles, Offset } from './styles';
 
-const Cart = ({ cart }) => {
+const Cart = ({ cart, onEmptyCart, onCartUpdate, onCartRemove }) => {
 
   const EmptyCart = () => (
     <Typography variant='subtitle1'>You have no itmes in your cart</Typography>
   )
+
+  const handleEmptyCart = () => onEmptyCart();
 
   const FilledCart = () => (
     <>
         <Grid sx={styles.items} container spaceing={3}>
           {cart.line_items.map((item) => (
             <Grid item xs={12} sm={4} key={item.id}>
-              <CartItem item={item} />
+              <CartItem item={item} onCartUpdate={onCartUpdate} onCartRemove={onCartRemove} />
             </Grid>
           ))}
         </Grid>
         <Box sx={styles.cardDetails}>
             <Typography variant='h4'>Subtotal: {cart.subtotal.formatted_with_symbol}</Typography>
             <Box>
-                <Button sx={styles.emptyButton} size='large' type='button' variant='contained' color='secondary'>Empty Cart</Button>
+                <Button sx={styles.emptyButton} onClick={handleEmptyCart} size='large' type='button' variant='contained' color='secondary'>Empty Cart</Button>
                 <Button sx={styles.checkoutButton} size='large' type='button' variant='contained' color='primary'>Checkout</Button>
             </Box>
         </Box>
