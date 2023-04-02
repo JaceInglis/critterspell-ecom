@@ -4,11 +4,13 @@ import CartItem from './CartItem/CartItem';
 
 import { styles, Offset } from './styles';
 
-const Cart = ({ cart }) => {
+const Cart = ({ cart, onEmptyCart }) => {
 
   const EmptyCart = () => (
     <Typography variant='subtitle1'>You have no itmes in your cart</Typography>
   )
+
+  const handleEmptyCart = () => onEmptyCart();
 
   const FilledCart = () => (
     <>
@@ -22,7 +24,7 @@ const Cart = ({ cart }) => {
         <Box sx={styles.cardDetails}>
             <Typography variant='h4'>Subtotal: {cart.subtotal.formatted_with_symbol}</Typography>
             <Box>
-                <Button sx={styles.emptyButton} size='large' type='button' variant='contained' color='secondary'>Empty Cart</Button>
+                <Button sx={styles.emptyButton} onClick={handleEmptyCart} size='large' type='button' variant='contained' color='secondary'>Empty Cart</Button>
                 <Button sx={styles.checkoutButton} size='large' type='button' variant='contained' color='primary'>Checkout</Button>
             </Box>
         </Box>
