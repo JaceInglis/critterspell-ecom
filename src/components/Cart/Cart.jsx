@@ -4,7 +4,7 @@ import CartItem from './CartItem/CartItem';
 
 import { styles, Offset } from './styles';
 
-const Cart = ({ cart, onEmptyCart }) => {
+const Cart = ({ cart, onEmptyCart, onCartUpdate }) => {
 
   const EmptyCart = () => (
     <Typography variant='subtitle1'>You have no itmes in your cart</Typography>
@@ -17,7 +17,7 @@ const Cart = ({ cart, onEmptyCart }) => {
         <Grid sx={styles.items} container spaceing={3}>
           {cart.line_items.map((item) => (
             <Grid item xs={12} sm={4} key={item.id}>
-              <CartItem item={item} />
+              <CartItem item={item} onCartUpdate={onCartUpdate} />
             </Grid>
           ))}
         </Grid>
