@@ -2,11 +2,12 @@ import React, { useState, useEffect } from 'react'
 import AdressForm from '../AdressForm'
 import PaymentForm from '../PaymentForm'
 
+import { Link } from 'react-router-dom';
 import { commerce } from '../../../lib/commerce';
 import { Paper, Stepper, Step, StepLabel, Typography, Divider, CircularProgress, Button, Box, Container } from '@mui/material'
 import { Offset, styles } from './styles'
 
-function Checkout({ cart }) {
+function Checkout({ cart, order, onCaptureCheckout, error }) {
   const [activeStep, setActiveStep] = useState(0);
   const [checkoutToken, setCheckoutToken] = useState(null);
   const [shippingData, setShippingData] = useState({});
@@ -36,10 +37,29 @@ function Checkout({ cart }) {
 
   const steps = ['Shipping adress', 'Payment details'];
 
-  const Form = () => activeStep === 0 ? <AdressForm next={next} checkoutToken={checkoutToken} /> : <PaymentForm />;
+console.log(order)
+
+  const Form = () => activeStep === 0 ? <AdressForm next={next} checkoutToken={checkoutToken} /> : <PaymentForm nextStep={nextStep} onCaptureCheckout={onCaptureCheckout} checkoutToken={checkoutToken} backStep={backStep} shippingData={shippingData}/>;
+
+  const Loading = () => (
+    <Box sx={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+      <CircularProgress />
+    </Box>
+  )
 
   const Confrimation = () => (
-    <div>Confrimation</div>
+    <>
+      {order.customer?
+      <Box>
+        <Typography variant='h6'>{`Thank you for your order Jace!`}</Typography>
+        <Divider />
+        <Typography mt={3} mb={3} variant='subtitle2'>Order ref: ref</Typography>
+        <Button type='button' variant='contained' color='primary' component={ Link } to='/'>Back Home</Button>
+      </Box>
+      :
+      <Loading />
+    }
+    </>
   )
 
   return (
@@ -55,7 +75,7 @@ function Checkout({ cart }) {
                         </Step>
                     ))}
                 </Stepper>
-                {activeStep === steps.length ? <Confrimation /> : checkoutToken && <Form />}
+                {activeStep === steps.length ? <Confrimation /> : checkoutToken ? <Form /> : <Loading />}
             </Paper>
         </Container>
     </>

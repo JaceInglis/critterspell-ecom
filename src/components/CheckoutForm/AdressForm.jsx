@@ -34,14 +34,13 @@ function AdressForm({ checkoutToken, next }) {
     setShippingSubdivision(Object.keys(subdivisions)[0]);
   }
 
-  const fetchShippingMethods = async (checkoutTokenId, country, region) => {
+  const fetchShippingMethods = async (checkoutTokenId, country, region = null) => {
     const shippingOptions = await commerce.checkout.getShippingOptions(checkoutTokenId, {
       country: country,
       region: region,})
 
-    setShippingOptions(shippingOptions)
-    setShippingOption(shippingOptions[0].id)
-    
+    setShippingOptions(shippingOptions);
+    setShippingOption(shippingOptions[0].id);
   }
 
   useEffect(() => {
@@ -53,8 +52,8 @@ function AdressForm({ checkoutToken, next }) {
   }, [shippingCountry])
 
   useEffect(() => {
-    fetchShippingMethods(checkoutToken.id, shippingCountry, shippingSubdivision);
-  },[shippingSubdivision])
+    fetchShippingMethods(checkoutToken.id, shippingCountry);
+  },[shippingCountry])
 
   return (
     <>
@@ -64,7 +63,7 @@ function AdressForm({ checkoutToken, next }) {
                 <Grid container spacing={3}>
                     <FormInput required name='firstName' label='First name' />
                     <FormInput required name='lastName' label='Last name' />
-                    <FormInput required name='adress1' label='Adress' />
+                    <FormInput required name='address1' label='Address' />
                     <FormInput required name='email' label='Email' />
                     <FormInput required name='city' label='City' />
                     <FormInput required name='zip' label='ZIP / Postal code' />
