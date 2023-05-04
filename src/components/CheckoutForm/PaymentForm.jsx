@@ -3,11 +3,15 @@ import { Typography, Button, Divider, Box } from '@mui/material'
 import { Elements, CardElement, ElementsConsumer } from '@stripe/react-stripe-js'
 import { loadStripe } from '@stripe/stripe-js'
 
+import { useTheme } from "@mui/material/styles"; 
+
 import Review from './Review'
 
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY)
 
 function PaymentForm({ checkoutToken, backStep, shippingData, onCaptureCheckout, nextStep }) {
+
+  const theme = useTheme();
 
   const handleSubmit = async (event, elements, stripe) => {
     event.preventDefault();
@@ -70,9 +74,9 @@ function PaymentForm({ checkoutToken, backStep, shippingData, onCaptureCheckout,
           {({ stripe, elements }) => (
             <form onSubmit={(e) => handleSubmit(e, elements, stripe)}>
               <CardElement />
-              <Box sx={{display: 'flex', justifyContent: 'space-between', marginTop: 3}}>
-                <Button variant='outline' color='secondary' onClick={backStep}>Back</Button>
-                <Button variant='contained' type='submit' color='primary' disabled={!stripe}>Pay {checkoutToken.subtotal.formatted_with_symbol}</Button>
+              <Box sx={{display: 'flex', justifyContent: 'space-between', marginTop: 3, [theme.breakpoints.down('sm')]: {flexDirection: 'column'}}}>
+                <Button sx={{[theme.breakpoints.down('sm')]: {marginBottom: '5px'}}} variant='contained' type='submit' color='primary' size='large' disabled={!stripe}>Pay {checkoutToken.subtotal.formatted_with_symbol}</Button>
+                <Button variant='contained' color='secondary' size='large' onClick={backStep}>Back</Button>  
               </Box>
             </form>
           )}
