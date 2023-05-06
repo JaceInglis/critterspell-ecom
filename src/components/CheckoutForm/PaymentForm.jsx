@@ -74,9 +74,9 @@ function PaymentForm({ checkoutToken, backStep, shippingData, onCaptureCheckout,
           {({ stripe, elements }) => (
             <form onSubmit={(e) => handleSubmit(e, elements, stripe)}>
               <CardElement />
-              <Box sx={{display: 'flex', justifyContent: 'space-between', marginTop: 3, [theme.breakpoints.down('sm')]: {flexDirection: 'column'}}}>
+              <Box sx={{display: 'flex', justifyContent: 'space-between', marginTop: 3, [theme.breakpoints.down('sm')]: {flexDirection: 'column-reverse'}}}>
+                <Button variant='contained' color='secondary' size='large' onClick={backStep}>Back</Button>
                 <Button sx={{[theme.breakpoints.down('sm')]: {marginBottom: '5px'}}} variant='contained' type='submit' color='primary' size='large' disabled={!stripe}>Pay {checkoutToken.subtotal.formatted_with_symbol}</Button>
-                <Button variant='contained' color='secondary' size='large' onClick={backStep}>Back</Button>  
               </Box>
             </form>
           )}
