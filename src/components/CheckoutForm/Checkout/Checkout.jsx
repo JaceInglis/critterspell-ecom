@@ -51,9 +51,9 @@ console.log(order)
     <>
       {order.customer?
       <Box>
-        <Typography variant='h6'>{`Thank you for your order Jace!`}</Typography>
+        <Typography variant='h6'>{`Thank you for your order ${order.shipping.name}!`}</Typography>
         <Divider />
-        <Typography mt={3} mb={3} variant='subtitle2'>Order ref: ref</Typography>
+        <Typography mt={3} mb={3} variant='subtitle2'>Order ref: {order.id}</Typography>
         <Button type='button' variant='contained' color='primary' component={ Link } to='/'>Back Home</Button>
       </Box>
       :
