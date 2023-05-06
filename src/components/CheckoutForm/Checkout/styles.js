@@ -10,10 +10,12 @@ export const styles = {
     },
     paper: {
         padding: 3,
-        width: '60%'
+        width: '60%',
     },
     stepper: {
         marginTop: '5%',
-        marginBottom: '5%'
+        marginBottom: '5%',
+        display: 'flex',
+        justifyContent: 'center'
     }
 }

@@ -3,9 +3,14 @@ import { Container, Typography, Button, Grid, Box } from '@mui/material';
 import CartItem from './CartItem/CartItem';
 import { Link } from 'react-router-dom';
 
-import { styles, Offset } from './styles';
+import { Styles, Offset } from './styles';
+import { useTheme } from "@mui/material/styles";
+
 
 const Cart = ({ cart, onEmptyCart, onCartUpdate, onCartRemove }) => {
+  const theme = useTheme();
+
+  const styles = Styles(theme)
 
   const EmptyCart = () => (
     <Typography variant='subtitle1'>You have no itmes in your cart</Typography>
@@ -23,8 +28,8 @@ const Cart = ({ cart, onEmptyCart, onCartUpdate, onCartRemove }) => {
           ))}
         </Grid>
         <Box sx={styles.cardDetails}>
-            <Typography variant='h4'>Subtotal: {cart.subtotal.formatted_with_symbol}</Typography>
-            <Box>
+            <Typography variant='h4' sx={styles.subtotal}>Subtotal: {cart.subtotal.formatted_with_symbol}</Typography>
+            <Box sx={styles.buttons}>
                 <Button sx={styles.emptyButton} onClick={handleEmptyCart} size='large' type='button' variant='contained' color='secondary'>Empty Cart</Button>
                 <Button sx={styles.checkoutButton} component={Link} to='/checkout' size='large' type='button' variant='contained' color='primary'>Checkout</Button>
             </Box>

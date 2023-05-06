@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useForm, FormProvider } from 'react-hook-form'
 import { InputLabel, Select, MenuItem, Button, Grid, Typography, Box } from '@mui/material'
 import { Link } from 'react-router-dom';
+import { useTheme } from "@mui/material/styles";
 
 import { commerce } from '../../lib/commerce';
 
@@ -16,6 +17,7 @@ function AdressForm({ checkoutToken, next }) {
   const [shippingOption, setShippingOption] = useState('');
 
   const methods = useForm();
+  const theme = useTheme();
 
   const countries = Object.entries(shippingCountries).map(([code, name]) => ({ id: code, label: name}));
   const subdivisions = Object.entries(shippingSubdivisions).map(([code, name]) => ({ id: code, label: name}));
@@ -102,9 +104,9 @@ function AdressForm({ checkoutToken, next }) {
                     </Grid>
                 </Grid>
                 <br />
-                <Box sx={{display: 'flex', justifyContent: 'space-between'}}>
-                  <Button component={Link} to='/cart' type='button' size='large' variant='outline' color='secondary'>Back to cart</Button>
-                  <Button type="submit" size='large' variant='contained' color='primary'>Next</Button>
+                <Box sx={{display: 'flex', justifyContent: 'space-between', [theme.breakpoints.down('sm')]: {flexDirection: 'column'}}}>
+                  <Button sx={{[theme.breakpoints.down('sm')]: {marginBottom: '5px'}}} type="submit" size='large' variant='contained' color='primary'>Next</Button>
+                  <Button component={Link} to='/cart' type='button' size='large' variant='contained' color='secondary'>Back to cart</Button>
                 </Box>
             </form>
         </FormProvider>
