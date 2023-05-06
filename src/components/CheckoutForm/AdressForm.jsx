@@ -104,9 +104,9 @@ function AdressForm({ checkoutToken, next }) {
                     </Grid>
                 </Grid>
                 <br />
-                <Box sx={{display: 'flex', justifyContent: 'space-between', [theme.breakpoints.down('sm')]: {flexDirection: 'column'}}}>
-                  <Button sx={{[theme.breakpoints.down('sm')]: {marginBottom: '5px'}}} type="submit" size='large' variant='contained' color='primary'>Next</Button>
+                <Box sx={{display: 'flex', justifyContent: 'space-between', [theme.breakpoints.down('sm')]: {flexDirection: 'column-reverse'}}}>
                   <Button component={Link} to='/cart' type='button' size='large' variant='contained' color='secondary'>Back to cart</Button>
+                  <Button sx={{[theme.breakpoints.down('sm')]: {marginBottom: '5px'}}} type="submit" size='large' variant='contained' color='primary'>Next</Button>
                 </Box>
             </form>
         </FormProvider>
