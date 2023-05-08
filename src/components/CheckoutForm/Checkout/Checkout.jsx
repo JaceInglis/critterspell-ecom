@@ -53,7 +53,9 @@ console.log(order)
       <Box>
         <Typography variant='h6'>{`Thank you for your order ${order.shipping.name}!`}</Typography>
         <Divider />
-        <Typography mt={3} mb={3} variant='subtitle2'>Order ref: {order.id}</Typography>
+        <Typography sx={{textAlign: 'center'}} mt={3} mb={3} variant='body1'>Thank you for your purchase from Critterspell!<br />We have sent you an email regarding your purchase.</Typography>
+        <Typography sx={{textAlign: 'center'}} mt={3} variant='h6'>Order Number:</Typography>
+        <Typography sx={{textAlign: 'center', fontWeight: '700'}}>{order.id}</Typography>
         <Button type='button' variant='contained' color='primary' component={ Link } to='/'>Back Home</Button>
       </Box>
       :
