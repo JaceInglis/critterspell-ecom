@@ -5,6 +5,7 @@ import PaymentForm from '../PaymentForm'
 import { Link } from 'react-router-dom';
 import { commerce } from '../../../lib/commerce';
 import { Paper, Stepper, Step, StepLabel, Typography, Divider, CircularProgress, Button, Box, Container } from '@mui/material'
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import { Offset, styles } from './styles'
 
 function Checkout({ cart, order, onCaptureCheckout, error }) {
@@ -51,9 +52,14 @@ console.log(order)
     <>
       {order.customer?
       <Box>
-        <Typography variant='h6'>{`Thank you for your order Jace!`}</Typography>
+        <Typography variant='h6'>Payment Complete</Typography>
         <Divider />
-        <Typography mt={3} mb={3} variant='subtitle2'>Order ref: ref</Typography>
+        <Box sx={{textAlign: 'center'}}>
+          <Typography mt={3} mb={3} variant='body1'>{`Thank you for your order ${order.shipping.name}! We have sent you an email regarding your purchase.`}</Typography>
+          <CheckCircleOutlineIcon sx={{fontSize: '100px', color: '#00ab66'}}/>
+          <Typography mt={3} variant='h6'>Order Number:</Typography>
+          <Typography mb={3} sx={{fontWeight: '700'}}>{order.id}</Typography>
+        </Box>
         <Button type='button' variant='contained' color='primary' component={ Link } to='/'>Back Home</Button>
       </Box>
       :
