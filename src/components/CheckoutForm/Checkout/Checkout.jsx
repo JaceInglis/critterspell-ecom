@@ -52,13 +52,13 @@ console.log(order)
     <>
       {order.customer?
       <Box>
-        <Typography variant='h6'>{`Thank you for your order ${order.shipping.name}!`}</Typography>
+        <Typography variant='h6'>Payment Complete</Typography>
         <Divider />
         <Box sx={{textAlign: 'center'}}>
-          <Typography mt={3} mb={3} variant='body1'>Thank you for your purchase from Critterspell!<br />We have sent you an email regarding your purchase.</Typography>
+          <Typography mt={3} mb={3} variant='body1'>{`Thank you for your order ${order.shipping.name}! We have sent you an email regarding your purchase.`}</Typography>
           <CheckCircleOutlineIcon sx={{fontSize: '100px', color: '#00ab66'}}/>
           <Typography mt={3} variant='h6'>Order Number:</Typography>
-          <Typography sx={{fontWeight: '700'}}>{order.id}</Typography>
+          <Typography mb={3} sx={{fontWeight: '700'}}>{order.id}</Typography>
         </Box>
         <Button type='button' variant='contained' color='primary' component={ Link } to='/'>Back Home</Button>
       </Box>
