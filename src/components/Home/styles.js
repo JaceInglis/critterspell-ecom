@@ -10,7 +10,7 @@ export const Styles = (theme) => ({
         flexDirection: 'column'
     },
     content: {
-        margin: '10% 20% 0',
+        margin: '10% 20% 5%',
         textAlign: 'center'
     },
     title: {
@@ -19,5 +19,13 @@ export const Styles = (theme) => ({
         [theme.breakpoints.down('sm')]: {
             fontSize: '65px'
         }
+    },
+    action: {
+        display: 'flex',
+        alignItems: 'center',
+        flexDirection: 'column'
+    },
+    link: {
+        textDecoration: 'none',
     }
 })

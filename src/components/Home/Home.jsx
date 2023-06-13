@@ -1,9 +1,10 @@
 import React from 'react'
-import { Typography, Box, Container } from '@mui/material';
+import { Typography, Box, Container, Button } from '@mui/material';
 import { Styles, Offset } from './styles'
 import { useTheme } from "@mui/material/styles"; 
 
 import Products from '../Products/Products';
+import { Link } from 'react-router-dom';
 
 function Home({ products, onAddToCart }) {
     const theme = useTheme();
@@ -13,7 +14,7 @@ function Home({ products, onAddToCart }) {
     <>
         <Offset />
         <Container sx={styles.container}>
-            <Box>
+            <Box sx={styles.action}>
                 <Typography sx={styles.title} variant='h1'>Welcome to Critterspell</Typography>
 
                 <Typography sx={styles.content} variant='body1'>Welcome to our charming world of custom name art! Our delightful animal-inspired
@@ -23,8 +24,9 @@ function Home({ products, onAddToCart }) {
                     attention to detail, resulting in a beautiful and personalized work of art that will be cherished for years to come.
                     We invite you to browse our collection and discover the perfect combination of animals to spell out your child's name.
                 </Typography>
+                <a style={styles.link} href='#products'><Button size='large' variant='contained'>Buy Now</Button></a>
             </Box>
-            <Box>
+            <Box id='products'>
                 <Products products={products} onAddToCart={onAddToCart}/>
             </Box>
         </Container>
