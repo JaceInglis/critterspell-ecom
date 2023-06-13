@@ -4,7 +4,7 @@ import { Styles, Offset } from './styles'
 import { useTheme } from "@mui/material/styles"; 
 
 import Products from '../Products/Products';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-scroll';
 
 function Home({ products, onAddToCart }) {
     const theme = useTheme();
@@ -24,7 +24,7 @@ function Home({ products, onAddToCart }) {
                     attention to detail, resulting in a beautiful and personalized work of art that will be cherished for years to come.
                     We invite you to browse our collection and discover the perfect combination of animals to spell out your child's name.
                 </Typography>
-                <a style={styles.link} href='#products'><Button size='large' variant='contained'>Buy Now</Button></a>
+                <Link to='products' smooth={true} duration={500}><Button size='large' variant='contained'>Buy Now</Button></Link>
             </Box>
             <Box id='products'>
                 <Products products={products} onAddToCart={onAddToCart}/>
