@@ -5,12 +5,11 @@ import { textAlign } from "@mui/system";
 
 const Footer = () => {
   return (
-    <footer>
+    <footer style={{marginTop: "auto"}}>
       <Paper
         elevation={12}
         sx={{
           display: "flex",
-          marginTop: "auto",
           padding: 2,
         }}
       >
