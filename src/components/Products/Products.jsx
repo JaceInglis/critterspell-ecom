@@ -1,13 +1,12 @@
 import React from "react";
 import { Grid, Typography, Container } from "@mui/material";
-import { Offset, styles } from "./styles";
+import { styles } from "./styles";
 
 import Product from "./Poduct/Product";
 
 const Products = ({ products, onAddToCart }) => {
     return (
        <main>
-            <Offset />
             <Container sx={styles.container}>
                 <Typography sx={styles.title} variant="h3">Our Products</Typography>
                 <Grid sx={styles.products} container justifyContent="center" spacing={4}>
