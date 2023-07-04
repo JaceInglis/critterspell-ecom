@@ -2,30 +2,16 @@ import { styled } from "@mui/material/styles"
 
 export const Offset = styled('div')(({ theme }) => theme.mixins.toolbar);
 
-export const Styles = (theme) => ({
+export const styles = {
     container: {
+        width: '100%',
         display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        flexDirection: 'column'
+        flexDirection: 'column',
+        minHeight: '100vh',
+        padding: '0px',
+        margin: '0px',
     },
     content: {
-        margin: '10% 20% 5%',
-        textAlign: 'center'
+        marginBottom: '5%'
     },
-    title: {
-        marginTop: '5%',
-        textAlign: 'center',
-        [theme.breakpoints.down('sm')]: {
-            fontSize: '65px'
-        }
-    },
-    action: {
-        display: 'flex',
-        alignItems: 'center',
-        flexDirection: 'column'
-    },
-    link: {
-        textDecoration: 'none',
-    }
-})
+}
