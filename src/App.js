@@ -31,10 +31,6 @@ function App() {
     setCart(item);
   }
 
-  const handleEmptyCart = async () => {
-    setCart(await commerce.cart.empty());
-  }
-
   const handleCartUpdate = async (productId, amount) => {
     const response = await commerce.cart.update(productId, { quantity: amount });
 
@@ -77,7 +73,7 @@ function App() {
         <Routes>
           <Route exact path='/' element={<Home products={products} onAddToCart={handleAddToCart} />} />
 
-          <Route exact path='/cart' element={<Cart cart={cart} onEmptyCart={handleEmptyCart} onCartUpdate={handleCartUpdate} onCartRemove={handleRemoveFromCart} />} />
+          <Route exact path='/cart' element={<Cart cart={cart} onCartUpdate={handleCartUpdate} onCartRemove={handleRemoveFromCart} />} />
 
           <Route exact path='/checkout' element={<Checkout cart={cart} order={order} onCaptureCheckout={handleCaptureCheckout} error={errorMessage} />} />
         </Routes>
