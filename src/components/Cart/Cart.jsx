@@ -26,12 +26,12 @@ const Cart = ({ cart, onCartUpdate, onCartRemove }) => {
         flexDirection: "column",
         alignItems: "center",
         color: "#D3D3D3",
-        justifyContent: 'space-evenly',
-        height: '300px'
+        justifyContent: "space-evenly",
+        height: "300px",
       }}
     >
       <Divider sx={styles.divider} />
-      <Box sx={{textAlign: 'center'}}>
+      <Box sx={{ textAlign: "center" }}>
         <BsBagX />
         <Typography variant="subtitle1">
           You have no itmes in your cart
@@ -39,16 +39,16 @@ const Cart = ({ cart, onCartUpdate, onCartRemove }) => {
       </Box>
       <Divider sx={styles.divider} />
       <Button
-            sx={styles.back}
-            component={Link}
-            to="/"
-            variant="outlined"
-            size="large"
-            type="button"
-            color="secondary"
-          >
-            Continue Shoping
-          </Button>
+        sx={styles.back}
+        component={Link}
+        to="/"
+        variant="outlined"
+        size="large"
+        type="button"
+        color="secondary"
+      >
+        Continue Shoping
+      </Button>
     </Box>
   );
 

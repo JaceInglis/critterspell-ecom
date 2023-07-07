@@ -1,6 +1,5 @@
-
 export const styles = {
-    image: {
-        flexGrow: 1
-    }
-}
+  image: {
+    flexGrow: 1,
+  },
+};

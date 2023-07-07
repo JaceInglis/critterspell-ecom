@@ -7,7 +7,7 @@ const Banner = () => {
     <Box
       sx={{
         position: "relative",
-        height: '600px',
+        height: "600px",
         width: "100%",
         display: "flex",
         flexDirection: "column",
@@ -42,7 +42,7 @@ const Banner = () => {
           color: "white",
           marginBottom: "20px",
           "@media (max-width: 800px)": {
-            fontSize: '4rem'
+            fontSize: "4rem",
           },
         }}
         variant="h1"

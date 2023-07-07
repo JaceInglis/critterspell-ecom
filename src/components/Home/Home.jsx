@@ -8,7 +8,6 @@ import Banner from "./Banner/Banner";
 import Footer from "./Footer/Footer";
 
 function Home({ products, onAddToCart }) {
-
   return (
     <>
       <Offset />

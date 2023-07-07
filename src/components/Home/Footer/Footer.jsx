@@ -5,7 +5,7 @@ import { textAlign } from "@mui/system";
 
 const Footer = () => {
   return (
-    <footer style={{marginTop: "auto"}}>
+    <footer style={{ marginTop: "auto" }}>
       <Paper
         elevation={12}
         sx={{
@@ -13,11 +13,17 @@ const Footer = () => {
           padding: 2,
         }}
       >
-        <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-evenly'}}>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "space-evenly",
+          }}
+        >
           <Typography>fun@critterspell.com</Typography>
           <Typography>250-826-7984</Typography>
         </Box>
-        <Box sx={{ marginLeft: "auto", textAlign: 'right'}}>
+        <Box sx={{ marginLeft: "auto", textAlign: "right" }}>
           <SocialIcon
             style={{ marginRight: 10 }}
             url="https://www.facebook.com/people/Critterspell/100057265586247/"
