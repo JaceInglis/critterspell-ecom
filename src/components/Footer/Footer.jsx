@@ -1,24 +1,18 @@
 import React from "react";
 import { Typography, Box, Paper } from "@mui/material";
 import { SocialIcon } from "react-social-icons";
-import { textAlign } from "@mui/system";
+
+import { styles } from  "./styles"
 
 const Footer = () => {
   return (
     <footer style={{ marginTop: "auto" }}>
       <Paper
         elevation={12}
-        sx={{
-          display: "flex",
-          padding: 2,
-        }}
+        sx={styles.paper}
       >
         <Box
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "space-evenly",
-          }}
+          sx={styles.container}
         >
           <Typography>fun@critterspell.com</Typography>
           <Typography>250-826-7984</Typography>

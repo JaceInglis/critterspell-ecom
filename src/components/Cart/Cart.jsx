@@ -78,7 +78,7 @@ const Cart = ({ cart, onCartUpdate, onCartRemove }) => {
             type="button"
             color="secondary"
           >
-            Continue Shoping
+            Continue Shopping
           </Button>
           <Button
             sx={styles.checkoutButton}

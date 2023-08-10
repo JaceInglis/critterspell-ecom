@@ -1,10 +1,14 @@
 import React from "react";
-import { Grid, Typography, Container } from "@mui/material";
-import { styles } from "./styles";
+import { Grid, Typography, Container, useTheme } from "@mui/material";
+import { Styles } from "./styles";
 
 import Product from "./Poduct/Product";
 
 const Products = ({ products, onAddToCart }) => {
+  const theme = useTheme();
+
+  const styles = Styles(theme);
+
   return (
     <main>
       <Container sx={styles.container}>

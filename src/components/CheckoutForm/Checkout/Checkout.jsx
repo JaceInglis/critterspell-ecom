@@ -15,14 +15,19 @@ import {
   Button,
   Box,
   Container,
+  useTheme,
 } from "@mui/material";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
-import { Offset, styles } from "./styles";
+import { Offset, Styles } from "./styles";
 
 function Checkout({ cart, order, onCaptureCheckout, error }) {
   const [activeStep, setActiveStep] = useState(0);
   const [checkoutToken, setCheckoutToken] = useState(null);
   const [shippingData, setShippingData] = useState({});
+
+  const theme = useTheme();
+
+  const styles = Styles(theme);
 
   useEffect(() => {
     const generateToken = async () => {
@@ -36,7 +41,7 @@ function Checkout({ cart, order, onCaptureCheckout, error }) {
     };
 
     generateToken();
-  }, []);
+  }, [cart.id]);
 
   const nextStep = () => setActiveStep((prev) => prev + 1);
   const backStep = () => setActiveStep((prev) => prev - 1);
@@ -65,9 +70,7 @@ function Checkout({ cart, order, onCaptureCheckout, error }) {
     );
 
   const Loading = () => (
-    <Box
-      sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}
-    >
+    <Box sx={styles.loading}>
       <CircularProgress />
     </Box>
   );
@@ -75,22 +78,20 @@ function Checkout({ cart, order, onCaptureCheckout, error }) {
   const Confrimation = () => (
     <>
       {order.customer ? (
-        <Box>
+        <Box sx={styles.mobile}>
           <Typography variant="h6">Payment Complete</Typography>
           <Divider />
-          <Box sx={{ textAlign: "center" }}>
+          <Box textAlign="center">
             <Typography
               mt={3}
               mb={3}
               variant="body1"
             >{`Thank you for your order ${order.shipping.name}! We have sent you an email regarding your purchase.`}</Typography>
-            <CheckCircleOutlineIcon
-              sx={{ fontSize: "100px", color: "#00ab66" }}
-            />
+            <CheckCircleOutlineIcon sx={styles.message} />
             <Typography mt={3} variant="h6">
               Order Number:
             </Typography>
-            <Typography mb={3} sx={{ fontWeight: "700" }}>
+            <Typography mb={3} fontWeight="700">
               {order.id}
             </Typography>
           </Box>

@@ -2,11 +2,11 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { commerce } from "./lib/commerce";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Products from "./components/Products/Products";
 import Navbar from "./components/Navbar/Navbar";
 import Cart from "./components/Cart/Cart";
 import Checkout from "./components/CheckoutForm/Checkout/Checkout";
 import Home from "./components/Home/Home";
+import Footer from "./components/Footer/Footer";
 
 function App() {
   const [products, setProducts] = useState([]);
@@ -105,6 +105,7 @@ function App() {
             }
           />
         </Routes>
+        <Footer />
       </>
     </Router>
   );

@@ -1,6 +1,10 @@
-export const styles = {
+export const Styles = (theme) => ({
   title: {
     marginTop: "5%",
+
+    [theme.breakpoints.down("sm")]: {
+      fontSize: "2.5rem",
+    },
   },
   container: {
     display: "flex",
@@ -10,4 +14,4 @@ export const styles = {
   products: {
     marginTop: "3%",
   },
-};
+});

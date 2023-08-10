@@ -16,6 +16,11 @@ export const Styles = (theme) => ({
   cardDetails: {
     marginTop: "10%",
     display: "flex",
+    [theme.breakpoints.down("sm")]: {
+      flexDirection: "column-reverse",
+      minHeight: "200px",
+      justifyContent: "space-between",
+    },
     width: "100%",
     justifyContent: "space-between",
     alignItems: "center",
@@ -31,16 +36,14 @@ export const Styles = (theme) => ({
     [theme.breakpoints.down("sm")]: {
       marginBottom: "5px",
     },
-    borderRadius: "300px",
     textAlign: "center",
   },
   checkoutButton: {
     minWidth: 150,
-    borderRadius: "300px",
   },
   subtotal: {
     [theme.breakpoints.down("sm")]: {
-      fontSize: "30px",
+      fontSize: "25px",
     },
   },
   buttons: {
