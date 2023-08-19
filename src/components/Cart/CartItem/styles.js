@@ -4,7 +4,7 @@ export const styles = {
   },
   media: {
     height: 0,
-    paddingTop: "56.25%",
+    paddingTop: "55%",
   },
   name: {},
   cardActions: {

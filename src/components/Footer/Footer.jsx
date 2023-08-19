@@ -2,22 +2,17 @@ import React from "react";
 import { Typography, Box, Paper } from "@mui/material";
 import { SocialIcon } from "react-social-icons";
 
-import { styles } from  "./styles"
+import { styles } from "./styles";
 
 const Footer = () => {
   return (
-    <footer style={{ marginTop: "auto" }}>
-      <Paper
-        elevation={12}
-        sx={styles.paper}
-      >
-        <Box
-          sx={styles.container}
-        >
+    <>
+      <Paper elevation={12} sx={styles.paper} component="footer" position>
+        <Box sx={styles.container}>
           <Typography>fun@critterspell.com</Typography>
           <Typography>250-826-7984</Typography>
         </Box>
-        <Box sx={{ marginLeft: "auto", textAlign: "right" }}>
+        <Box sx={{ textAlign: "right" }}>
           <SocialIcon
             style={{ marginRight: 10 }}
             url="https://www.facebook.com/people/Critterspell/100057265586247/"
@@ -35,7 +30,7 @@ const Footer = () => {
           </Typography>
         </Box>
       </Paper>
-    </footer>
+    </>
   );
 };
 

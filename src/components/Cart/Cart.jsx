@@ -6,6 +6,7 @@ import {
   Grid,
   Box,
   Divider,
+  useMediaQuery,
 } from "@mui/material";
 import CartItem from "./CartItem/CartItem";
 import { Link } from "react-router-dom";
@@ -19,19 +20,20 @@ const Cart = ({ cart, onCartUpdate, onCartRemove }) => {
 
   const styles = Styles(theme);
 
+  const mobile = useMediaQuery(theme.breakpoints.down("sm"));
+
   const EmptyCart = () => (
     <Box
       sx={{
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        color: "#D3D3D3",
         justifyContent: "space-evenly",
         height: "300px",
       }}
     >
       <Divider sx={styles.divider} />
-      <Box sx={{ textAlign: "center" }}>
+      <Box sx={{ textAlign: "center", color: "tertiary.main" }}>
         <BsBagX />
         <Typography variant="subtitle1">
           You have no itmes in your cart
@@ -53,8 +55,13 @@ const Cart = ({ cart, onCartUpdate, onCartRemove }) => {
   );
 
   const FilledCart = () => (
-    <>
-      <Grid sx={styles.items} container spaceing={3}>
+    <Container sx={styles.container}>
+      {mobile && (
+        <Typography variant="h4" sx={styles.subtotal}>
+          Subtotal: {cart.subtotal.formatted_with_symbol}
+        </Typography>
+      )}
+      <Grid sx={styles.items} container spacing={3}>
         {cart.line_items.map((item) => (
           <Grid item xs={12} sm={4} key={item.id}>
             <CartItem
@@ -66,9 +73,11 @@ const Cart = ({ cart, onCartUpdate, onCartRemove }) => {
         ))}
       </Grid>
       <Box sx={styles.cardDetails}>
-        <Typography variant="h4" sx={styles.subtotal}>
-          Subtotal: {cart.subtotal.formatted_with_symbol}
-        </Typography>
+        {!mobile && (
+          <Typography variant="h4" sx={styles.subtotal}>
+            Subtotal: {cart.subtotal.formatted_with_symbol}
+          </Typography>
+        )}
         <Box sx={styles.buttons}>
           <Button
             sx={styles.back}
@@ -93,7 +102,7 @@ const Cart = ({ cart, onCartUpdate, onCartRemove }) => {
           </Button>
         </Box>
       </Box>
-    </>
+    </Container>
   );
 
   if (!cart.line_items) return <div>Loading...</div>;
@@ -101,10 +110,10 @@ const Cart = ({ cart, onCartUpdate, onCartRemove }) => {
   return (
     <Container>
       <Offset />
-      <Typography sx={styles.title} variant="h3">
-        <BsBag sx={{ alignSelf: "center", fontSize: "100px" }} /> Your Shopping
-        Cart
+      <Typography sx={styles.title} variant="h1">
+        <BsBag sx={{ alignSelf: "center" }} /> Your Shopping Cart
       </Typography>
+
       {!cart.line_items.length ? <EmptyCart /> : <FilledCart />}
     </Container>
   );
