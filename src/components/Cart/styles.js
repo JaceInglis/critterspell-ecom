@@ -4,15 +4,15 @@ export const Offset = styled("div")(({ theme }) => theme.mixins.toolbar);
 
 export const Styles = (theme) => ({
   title: {
-    marginTop: 5,
+    marginTop: theme.spacing(4),
     [theme.breakpoints.down("sm")]: {
       fontSize: "35px",
     },
     textAlign: "center",
-    marginBottom: 5,
+    marginBottom: theme.spacing(4),
   },
   cardDetails: {
-    marginTop: "10%",
+    marginTop: theme.spacing(4),
     display: "flex",
     [theme.breakpoints.down("sm")]: {
       justifyContent: "center",
@@ -22,16 +22,15 @@ export const Styles = (theme) => ({
     alignItems: "center",
   },
   items: {
-    marginTop: "3%",
+    marginTop: theme.spacing(4),
   },
-  back: {
+  backFull: {
     minWidth: 150,
-    [theme.breakpoints.up("xs")]: {
-      marginRight: "20px",
-    },
-    [theme.breakpoints.down("sm")]: {
-      marginBottom: "5px",
-    },
+    marginRight: theme.spacing(4),
+    textAlign: "center",
+  },
+  backEmpty: {
+    minWidth: 150,
     textAlign: "center",
   },
   checkoutButton: {

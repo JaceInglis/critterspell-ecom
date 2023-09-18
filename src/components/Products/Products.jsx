@@ -12,7 +12,7 @@ const Products = ({ products, onAddToCart }) => {
   return (
     <main>
       <Container sx={styles.container}>
-        <Typography sx={styles.title} variant="h3">
+        <Typography sx={styles.title} variant="h2">
           Our Products
         </Typography>
         <Grid

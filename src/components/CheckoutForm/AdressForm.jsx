@@ -76,9 +76,6 @@ function AdressForm({ checkoutToken, next }) {
 
   useEffect(() => {
     shippingCountry && fetchSubdivisions(shippingCountry);
-  }, [shippingCountry]);
-
-  useEffect(() => {
     fetchShippingMethods(checkoutToken.id, shippingCountry);
   }, [shippingCountry]);
 
@@ -158,7 +155,7 @@ function AdressForm({ checkoutToken, next }) {
               display: "flex",
               justifyContent: "space-between",
               [theme.breakpoints.down("sm")]: {
-                flexDirection: "column-reverse",
+                flexDirection: "column",
               },
             }}
           >
@@ -167,8 +164,8 @@ function AdressForm({ checkoutToken, next }) {
               to="/cart"
               type="button"
               size="large"
-              variant="contained"
-              color="secondary"
+              variant="text"
+              color="tertiary"
             >
               Back to cart
             </Button>

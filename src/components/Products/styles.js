@@ -3,7 +3,7 @@ export const Styles = (theme) => ({
     marginTop: "5%",
 
     [theme.breakpoints.down("sm")]: {
-      fontSize: "2.5rem",
+      fontSize: "9vw",
     },
   },
   container: {

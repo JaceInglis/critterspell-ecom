@@ -9,8 +9,11 @@ export const Styles = (theme) => ({
     justifyContent: "center",
   },
   paper: {
-    padding: 3,
-    width: "60%",
+    padding: theme.spacing(3),
+    margin: theme.spacing(4),
+    [theme.breakpoints.up("sm")]: {
+      width: "60%",
+    },
   },
   stepper: {
     marginTop: "5%",
@@ -22,6 +25,7 @@ export const Styles = (theme) => ({
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
+    margin: theme.spacing(10),
   },
   message: {
     fontSize: "100px",

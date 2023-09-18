@@ -19,13 +19,16 @@ export const Styles = (theme) => ({
     color: "white",
     marginBottom: "20px",
     [theme.breakpoints.down("sm")]: {
-      fontSize: "3.5rem",
+      fontSize: "10vw",
     },
     fontWeight: 700,
   },
 
   message: {
     color: "white",
+    [theme.breakpoints.down("sm")]: {
+      fontSize: "4vw",
+    },
     width: "75%",
     marginBottom: "20px",
   },

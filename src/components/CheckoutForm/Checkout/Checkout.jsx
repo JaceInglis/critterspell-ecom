@@ -71,7 +71,7 @@ function Checkout({ cart, order, onCaptureCheckout, error }) {
 
   const Loading = () => (
     <Box sx={styles.loading}>
-      <CircularProgress />
+      <CircularProgress color="tertiary" />
     </Box>
   );
 

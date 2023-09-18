@@ -7,6 +7,7 @@ import {
   Box,
   Divider,
   useMediaQuery,
+  Alert,
 } from "@mui/material";
 import CartItem from "./CartItem/CartItem";
 import { Link } from "react-router-dom";
@@ -41,13 +42,13 @@ const Cart = ({ cart, onCartUpdate, onCartRemove }) => {
       </Box>
       <Divider sx={styles.divider} />
       <Button
-        sx={styles.back}
+        sx={styles.backEmpty}
         component={Link}
         to="/"
         variant="outlined"
         size="large"
         type="button"
-        color="secondary"
+        color="tertiary"
       >
         Continue Shoping
       </Button>
@@ -61,7 +62,7 @@ const Cart = ({ cart, onCartUpdate, onCartRemove }) => {
           Subtotal: {cart.subtotal.formatted_with_symbol}
         </Typography>
       )}
-      <Grid sx={styles.items} container spacing={3}>
+      <Grid sx={styles.items} container>
         {cart.line_items.map((item) => (
           <Grid item xs={12} sm={4} key={item.id}>
             <CartItem
@@ -74,18 +75,18 @@ const Cart = ({ cart, onCartUpdate, onCartRemove }) => {
       </Grid>
       <Box sx={styles.cardDetails}>
         {!mobile && (
-          <Typography variant="h4" sx={styles.subtotal}>
+          <Typography variant="h5" sx={styles.subtotal}>
             Subtotal: {cart.subtotal.formatted_with_symbol}
           </Typography>
         )}
         <Box sx={styles.buttons}>
           <Button
-            sx={styles.back}
+            sx={styles.backFull}
             component={Link}
             to="/"
             size="large"
             type="button"
-            color="secondary"
+            color="tertiary"
           >
             Continue Shopping
           </Button>
@@ -115,6 +116,12 @@ const Cart = ({ cart, onCartUpdate, onCartRemove }) => {
       </Typography>
 
       {!cart.line_items.length ? <EmptyCart /> : <FilledCart />}
+
+      {!!cart.line_items.length && (
+        <Alert severity="info" sx={{ marginTop: theme.spacing(4) }}>
+          At the checkout stage, you'll be prompted to provide the child's name.
+        </Alert>
+      )}
     </Container>
   );
 };

@@ -97,13 +97,13 @@ function PaymentForm({
                   justifyContent: "space-between",
                   marginTop: 3,
                   [theme.breakpoints.down("sm")]: {
-                    flexDirection: "column-reverse",
+                    flexDirection: "column",
                   },
                 }}
               >
                 <Button
-                  variant="contained"
-                  color="secondary"
+                  variant="text"
+                  color="tertiary"
                   size="large"
                   onClick={backStep}
                 >
