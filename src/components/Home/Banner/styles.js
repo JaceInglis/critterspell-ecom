@@ -21,7 +21,6 @@ export const Styles = (theme) => ({
     [theme.breakpoints.down("sm")]: {
       fontSize: "10vw",
     },
-    fontWeight: 700,
   },
 
   message: {

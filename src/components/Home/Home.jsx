@@ -1,18 +1,39 @@
 import React from "react";
-import { Box } from "@mui/material";
-import { styles, Offset } from "./styles";
+import { Box, Typography, Container, useTheme } from "@mui/material";
+import { Styles, Offset } from "./styles";
 
 import Products from "../Products/Products";
 import Banner from "./Banner/Banner";
 
 function Home({ products, onAddToCart }) {
+  const theme = useTheme();
+  const styles = Styles(theme);
+
   return (
     <>
       <Offset />
       <Box sx={styles.container}>
         <Banner />
-        <Box sx={styles.content} id="products">
-          <Products products={products} onAddToCart={onAddToCart} />
+        <Box id="products" sx={styles.wrapper} my={theme.spacing(8)}>
+          <Container sx={styles.content} maxWidth="xl">
+            <Box maxWidth="md">
+              <Typography variant="h1" gutterBottom>
+                Crafted with quality
+              </Typography>
+              <Typography variant="body1">
+                Our unwavering commitment to excellence ensures that your
+                child's framed animal-themed name art will remain a beloved,
+                enduring source of inspiration, comfort, and joy in their room,
+                from their formative years and beyond. It's not just a
+                decoration; it's a timeless keepsake that will continuously
+                captivate their imagination.
+              </Typography>
+            </Box>
+
+            <Box sx={styles.product}>
+              <Products products={products} onAddToCart={onAddToCart} />
+            </Box>
+          </Container>
         </Box>
       </Box>
     </>

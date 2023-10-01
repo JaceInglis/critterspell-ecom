@@ -4,7 +4,6 @@ export const Offset = styled("div")(({ theme }) => theme.mixins.toolbar);
 
 export const Styles = (theme) => ({
   container: {
-    marginTop: "3%",
     display: "flex",
     justifyContent: "center",
   },
@@ -12,7 +11,7 @@ export const Styles = (theme) => ({
     padding: theme.spacing(3),
     margin: theme.spacing(4),
     [theme.breakpoints.up("sm")]: {
-      width: "60%",
+      width: "75%",
     },
   },
   stepper: {

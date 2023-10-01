@@ -78,7 +78,7 @@ function App() {
     <ThemeProvider theme={theme}>
       <Router>
         <Box
-          sx={{ minHeight: "100vh", display: "flex", flexDirection: "column" }}
+          sx={{ minHeight: "90vh", display: "flex", flexDirection: "column" }}
         >
           <Navbar totalItems={cart.total_items} />
           <Routes>
@@ -115,8 +115,8 @@ function App() {
               }
             />
           </Routes>
-          
         </Box>
+        <Footer />
       </Router>
     </ThemeProvider>
   );
