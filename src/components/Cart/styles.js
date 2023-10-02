@@ -4,11 +4,15 @@ export const Offset = styled("div")(({ theme }) => theme.mixins.toolbar);
 
 export const Styles = (theme) => ({
   title: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
     marginTop: theme.spacing(4),
     [theme.breakpoints.down("sm")]: {
+      flexDirection: 'column',
+      alignItems: 'left',
       fontSize: "35px",
     },
-    textAlign: "center",
     marginBottom: theme.spacing(4),
   },
   cardDetails: {

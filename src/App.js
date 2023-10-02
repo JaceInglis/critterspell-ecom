@@ -14,10 +14,9 @@ import { Box, useMediaQuery, ThemeProvider } from "@mui/material";
 function App() {
   const [products, setProducts] = useState([]);
   const [cart, setCart] = useState({});
+  const [cartLoading, setCartLoading] = useState(null);
   const [order, setOrder] = useState({});
   const [errorMessage, setErrorMessage] = useState("");
-
-  const mobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   const fetchProducts = async () => {
     const { data } = await commerce.products.list();
@@ -30,9 +29,15 @@ function App() {
   };
 
   const handleAddToCart = async (productId, quantitiy) => {
-    const item = await commerce.cart.add(productId, quantitiy);
-
-    setCart(item);
+    try {
+      setCartLoading(true);
+      const item = await commerce.cart.add(productId, quantitiy);
+      setCart(item);
+    } catch (error) {
+      setCartLoading(error);
+    } finally {
+      setCartLoading(false);
+    }
   };
 
   const handleCartUpdate = async (productId, amount) => {
@@ -86,7 +91,12 @@ function App() {
               exact
               path="/"
               element={
-                <Home products={products} onAddToCart={handleAddToCart} />
+                <Home
+                  products={products}
+                  cart={cart}
+                  cartLoading={cartLoading}
+                  onAddToCart={handleAddToCart}
+                />
               }
             />
 

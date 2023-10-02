@@ -5,7 +5,7 @@ import { Styles, Offset } from "./styles";
 import Products from "../Products/Products";
 import Banner from "./Banner/Banner";
 
-function Home({ products, onAddToCart }) {
+function Home({ products, onAddToCart, cartLoading }) {
   const theme = useTheme();
   const styles = Styles(theme);
 
@@ -31,7 +31,11 @@ function Home({ products, onAddToCart }) {
             </Box>
 
             <Box sx={styles.product}>
-              <Products products={products} onAddToCart={onAddToCart} />
+              <Products
+                products={products}
+                onAddToCart={onAddToCart}
+                cartLoading={cartLoading}
+              />
             </Box>
           </Container>
         </Box>

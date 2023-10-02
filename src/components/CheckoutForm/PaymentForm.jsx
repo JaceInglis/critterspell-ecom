@@ -35,7 +35,7 @@ function PaymentForm({
     });
 
     if (error) {
-      console.log(error);
+      console.error(error);
     } else {
       const orderData = {
         line_items: checkoutToken.line_items,
@@ -69,15 +69,11 @@ function PaymentForm({
         },
       };
 
-      console.log(orderData);
-
       onCaptureCheckout(checkoutToken.id, orderData);
 
       nextStep();
     }
   };
-
-  console.log(checkoutToken);
 
   return (
     <>

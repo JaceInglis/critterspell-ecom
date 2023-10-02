@@ -47,14 +47,11 @@ function Checkout({ cart, order, onCaptureCheckout, error }) {
   const backStep = () => setActiveStep((prev) => prev - 1);
 
   const next = (data) => {
-    console.log(data);
     setShippingData(data);
     nextStep();
   };
 
   const steps = ["Shipping adress", "Payment details"];
-
-  console.log(order);
 
   const Form = () =>
     activeStep === 0 ? (

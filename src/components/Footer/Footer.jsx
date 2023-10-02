@@ -9,7 +9,9 @@ import {
   useTheme,
   useMediaQuery,
 } from "@mui/material";
-import { SocialIcon } from "react-social-icons";
+import FacebookIcon from "@mui/icons-material/Facebook";
+import InstagramIcon from "@mui/icons-material/Instagram";
+import TwitterIcon from "@mui/icons-material/Twitter";
 
 import { styles } from "./styles";
 
@@ -100,23 +102,9 @@ const Footer = () => {
               width="100%"
               sx={{ display: "flex", justifyContent: "center", gap: 4, my: 2 }}
             >
-              {[
-                "twitter.com",
-                "instagram.com",
-                "https://www.facebook.com/Critterspell-100057265586247",
-              ].map((social, index) => (
-                <SocialIcon
-                  url={social}
-                  fgColor="#000"
-                  bgColor="transparent"
-                  style={{
-                    height: 35,
-                    width: 35,
-                    border: "1px solid #000",
-                    borderRadius: "50%",
-                  }}
-                />
-              ))}
+              <FacebookIcon />
+              <InstagramIcon />
+              <TwitterIcon />
             </Box>
           </Box>
         </Container>

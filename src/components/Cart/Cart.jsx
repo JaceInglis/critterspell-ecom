@@ -14,7 +14,8 @@ import { Link } from "react-router-dom";
 
 import { Styles, Offset } from "./styles";
 import { useTheme } from "@mui/material/styles";
-import { BsBag, BsBagX } from "react-icons/bs";
+import ShoppingBagOutlinedIcon from '@mui/icons-material/ShoppingBagOutlined';
+import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
 
 const Cart = ({ cart, onCartUpdate, onCartRemove }) => {
   const theme = useTheme();
@@ -35,7 +36,7 @@ const Cart = ({ cart, onCartUpdate, onCartRemove }) => {
     >
       <Divider sx={styles.divider} />
       <Box sx={{ textAlign: "center", color: "tertiary.main" }}>
-        <BsBagX />
+        <ShoppingBagOutlinedIcon />
         <Typography variant="subtitle1">
           You have no itmes in your cart
         </Typography>
@@ -112,7 +113,7 @@ const Cart = ({ cart, onCartUpdate, onCartRemove }) => {
     <Container>
       <Offset />
       <Typography sx={styles.title} variant="h1">
-        <BsBag sx={{ alignSelf: "center" }} /> Your Shopping Cart
+        <ShoppingBagIcon sx={{fontSize: 50}}/> Your Shopping Cart
       </Typography>
 
       {!cart.line_items.length ? <EmptyCart /> : <FilledCart />}
