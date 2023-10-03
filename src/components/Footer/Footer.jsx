@@ -88,8 +88,8 @@ const Footer = () => {
               <Typography variant="h6" mt={mobile && 2}>
                 Get in touch
               </Typography>
-              <Link href="tel:250-826-7984">250-826-7984</Link>
-              <Link href="mailto:critterspell@fun.com">
+              <Link underline="hover" href="tel:250-826-7984">250-826-7984</Link>
+              <Link underline="hover" href="mailto:critterspell@fun.com">
                 critterspell@fun.com
               </Link>
             </Box>

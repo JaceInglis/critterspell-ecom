@@ -4,6 +4,7 @@ import { Styles, Offset } from "./styles";
 
 import Products from "../Products/Products";
 import Banner from "./Banner/Banner";
+import TestName from "../TestName/TestName";
 
 function Home({ products, onAddToCart, cartLoading }) {
   const theme = useTheme();
@@ -39,6 +40,9 @@ function Home({ products, onAddToCart, cartLoading }) {
             </Box>
           </Container>
         </Box>
+        <Container sx={styles.content} maxWidth="xl">
+          <TestName />
+        </Container>
       </Box>
     </>
   );
