@@ -8,14 +8,15 @@ import {
   Select,
   MenuItem,
   InputLabel,
+  useTheme,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 const letters = {
   a: "/letters/Letters_small_A.png",
   b: {
-    1: "/letters/Letters_small_B-Purple.png",
-    2: "/letters/Letters_small_B.png",
+    0: "/letters/Letters_small_B-Purple.png",
+    1: "/letters/Letters_small_B.png",
   },
   c: "/letters/Letters_small_C.png",
   d: "/letters/Letters_small_D.png",
@@ -46,20 +47,24 @@ const letters = {
 
 const TestName = () => {
   const [name, setName] = useState("Name");
-  const [nameConfig, setNameConfig] = useState({
-    b: [{ color: 1 }],
-  });
+  const [nameConfig, setNameConfig] = useState({});
 
-  console.log(nameConfig);
+  const theme = useTheme()
 
   const handleNameChange = (event) => {
-    setName(event.target.value);
+    const newName = event.target.value;
+    setName(newName);
+    newName.split("").forEach((letter, index) => {
+      if (letter === "b") {
+        handleAddConfig(letter, index);
+      }
+    });
   };
 
   const handleChangeColor = (letter, index) => (event) => {
     setNameConfig((prevState) => {
-      const newConfig = [...prevState[letter]]; // Copy the array for the specific letter
-      newConfig[index] = { color: event.target.value }; // Update the color at the specified index
+      const newConfig = { ...prevState[letter] };
+      newConfig[index] = { color: event.target.value };
       return {
         ...prevState,
         [letter]: newConfig,
@@ -67,10 +72,19 @@ const TestName = () => {
     });
   };
 
-  console.log(nameConfig)
+  const handleAddConfig = (letter, index) => {
+    setNameConfig((prevState) => ({
+      ...prevState,
+      [letter]: { ...prevState[letter], [index]: { color: 0 } },
+    }));
+  };
+
+  useEffect(() => {
+    console.log("config", nameConfig);
+  }, [nameConfig]);
 
   return (
-    <Box display="flex" flexDirection="column" alignItems="center" width="100%">
+    <Box display="flex" flexDirection="column" alignItems="center" width="100%" my={theme.spacing(8)}>
       <Typography variant="h1" gutterBottom>
         See how your childs name would look
       </Typography>
@@ -80,57 +94,60 @@ const TestName = () => {
         value={name}
         onChange={handleNameChange}
       />
-      <Box height={200} display="flex" justifyContent="center" mt={6}>
+      <Box height={250} display="flex" justifyContent="center" mt={6}>
         {name
           .toLowerCase()
           .split("")
           .map((letter, index) => {
             if (letter === " ") {
-              return <Box minWidthidth={50} width={50} />;
+              return <Box minWidthidth={50} width={50} key={index} />;
             } else if (letter === "b") {
               return (
                 <Box
+                  key={index}
                   sx={{
                     width: "135px",
                     position: "relative",
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: 'center'
                   }}
                 >
                   <FormControl
+                    variant="standard"
                     fullWidth
                     sx={{
-                      marginBottom: "-70px",
+                      marginBottom: "-15px",
                       position: "absolute",
                       bottom: 0,
-                      left: 0,
+                      
+                      width: "60%",
                     }}
                   >
                     <InputLabel id={`select-label-${index}`}>Color</InputLabel>
                     <Select
                       labelId={`select-label-${index}`}
-                      value={nameConfig[letter] && nameConfig[letter][index] ? nameConfig[letter][index].color : 1}
+                      value={nameConfig[letter][index]["color"]}
                       label="Color"
-                      onChange={handleChangeColor(letter)}
+                      onChange={handleChangeColor(letter, index)}
                     >
-                      <MenuItem value={1}>Purple</MenuItem>
-                      <MenuItem value={2}>Pink</MenuItem>
+                      <MenuItem value={0}>Purple</MenuItem>
+                      <MenuItem value={1}>Pink</MenuItem>
                     </Select>
                   </FormControl>
-
                   <img
                     style={{
                       maxWidth: "210px",
                       maxHeight: "200px",
                     }}
-                    src={
-                      letters[letter][nameConfig[letter][index]['color']]
-                    }
+                    src={letters[letter][nameConfig[letter][index]["color"]]}
                     alt={letter}
                   />
                 </Box>
               );
             } else {
               return (
-                <Box>
+                <Box key={index}>
                   <img
                     style={{ maxWidth: "210px", maxHeight: "200px" }}
                     src={letters[letter]}

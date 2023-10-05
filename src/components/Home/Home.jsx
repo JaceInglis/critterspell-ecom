@@ -15,7 +15,7 @@ function Home({ products, onAddToCart, cartLoading }) {
       <Offset />
       <Box sx={styles.container}>
         <Banner />
-        <Box id="products" sx={styles.wrapper} my={theme.spacing(8)}>
+        <Box id="products" sx={styles.wrapper} mt={theme.spacing(8)}>
           <Container sx={styles.content} maxWidth="xl">
             <Box maxWidth="md">
               <Typography variant="h1" gutterBottom>
