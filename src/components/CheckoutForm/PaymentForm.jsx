@@ -17,10 +17,13 @@ function PaymentForm({
   checkoutToken,
   backStep,
   shippingData,
+  name,
   onCaptureCheckout,
   nextStep,
 }) {
   const theme = useTheme();
+
+  console.log(name)
 
   const handleSubmit = async (event, elements, stripe) => {
     event.preventDefault();
@@ -66,6 +69,9 @@ function PaymentForm({
           stripe: {
             payment_method_id: paymentMethod.id,
           },
+        },
+        extra_fields: {
+          extr_VPvL5zjd35AQkX: JSON.stringify(name, null, 4),
         },
       };
 

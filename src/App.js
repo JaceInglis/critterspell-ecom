@@ -9,14 +9,22 @@ import Home from "./components/Home/Home";
 import Footer from "./components/Footer/Footer";
 import theme from "./theme";
 
-import { Box, useMediaQuery, ThemeProvider } from "@mui/material";
+import { Box, ThemeProvider } from "@mui/material";
 
 function App() {
   const [products, setProducts] = useState([]);
+  const [name, setName] = useState([]);
   const [cart, setCart] = useState({});
   const [cartLoading, setCartLoading] = useState(null);
   const [order, setOrder] = useState({});
   const [errorMessage, setErrorMessage] = useState("");
+
+  useEffect(() => {
+    const storedName = localStorage.getItem("name");
+    if (storedName) {
+      setName(JSON.parse(storedName));
+    }
+  }, []);
 
   const fetchProducts = async () => {
     const { data } = await commerce.products.list();
@@ -28,7 +36,7 @@ function App() {
     setCart(await commerce.cart.retrieve());
   };
 
-  const handleAddToCart = async (productId, quantitiy) => {
+  const handleAddToCart = async (productId, quantitiy, name) => {
     try {
       setCartLoading(true);
       const item = await commerce.cart.add(productId, quantitiy);
@@ -38,26 +46,27 @@ function App() {
     } finally {
       setCartLoading(false);
     }
-  };
-
-  const handleCartUpdate = async (productId, amount) => {
-    const response = await commerce.cart.update(productId, {
-      quantity: amount,
+    setName((prevState) => {
+      const updatedName = [...prevState, name];
+      localStorage.setItem("name", JSON.stringify(updatedName));
+      return updatedName;
     });
-
-    setCart(response);
   };
 
   const handleRemoveFromCart = async (productId) => {
     const response = await commerce.cart.remove(productId);
 
     setCart(response);
+    setName([]);
+    localStorage.removeItem("name");
   };
 
   const refreshCart = async () => {
     const newCart = await commerce.cart.refresh();
 
     setCart(newCart);
+    setName([]);
+    localStorage.removeItem("name");
   };
 
   const handleCaptureCheckout = async (checkoutTokenId, newOrder) => {
@@ -106,7 +115,7 @@ function App() {
               element={
                 <Cart
                   cart={cart}
-                  onCartUpdate={handleCartUpdate}
+                  name={name}
                   onCartRemove={handleRemoveFromCart}
                 />
               }
@@ -118,6 +127,7 @@ function App() {
               element={
                 <Checkout
                   cart={cart}
+                  name={name}
                   order={order}
                   onCaptureCheckout={handleCaptureCheckout}
                   error={errorMessage}

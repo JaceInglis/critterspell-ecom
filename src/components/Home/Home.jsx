@@ -30,18 +30,10 @@ function Home({ products, onAddToCart, cartLoading }) {
                 captivate their imagination.
               </Typography>
             </Box>
-
-            <Box sx={styles.product}>
-              <Products
-                products={products}
-                onAddToCart={onAddToCart}
-                cartLoading={cartLoading}
-              />
-            </Box>
           </Container>
         </Box>
         <Container sx={styles.content} maxWidth="xl">
-          <TestName />
+          <TestName cartLoading={cartLoading} onAddToCart={onAddToCart} products={products}/>
         </Container>
       </Box>
     </>

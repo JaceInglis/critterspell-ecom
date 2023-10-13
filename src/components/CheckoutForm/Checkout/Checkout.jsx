@@ -20,7 +20,7 @@ import {
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import { Offset, Styles } from "./styles";
 
-function Checkout({ cart, order, onCaptureCheckout, error }) {
+function Checkout({ cart, order, onCaptureCheckout, error, name }) {
   const [activeStep, setActiveStep] = useState(0);
   const [checkoutToken, setCheckoutToken] = useState(null);
   const [shippingData, setShippingData] = useState({});
@@ -63,6 +63,7 @@ function Checkout({ cart, order, onCaptureCheckout, error }) {
         checkoutToken={checkoutToken}
         backStep={backStep}
         shippingData={shippingData}
+        name={name}
       />
     );
 

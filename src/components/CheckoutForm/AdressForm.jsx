@@ -17,6 +17,7 @@ import { commerce } from "../../lib/commerce";
 import FormInput from "./CustomTextField";
 
 function AdressForm({ checkoutToken, next }) {
+  console.log(checkoutToken)
   const [shippingCountries, setShippingCountries] = useState([]);
   const [shippingCountry, setShippingCountry] = useState("");
   const [shippingSubdivisions, setShippingSubdivisions] = useState([]);

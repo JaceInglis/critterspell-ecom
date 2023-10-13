@@ -11,7 +11,7 @@ import {
 
 import { styles } from "./styles";
 
-function CartItem({ item, onCartUpdate, onCartRemove }) {
+function CartItem({ item, onCartRemove, name }) {
   const handleRemoveFromCart = () => onCartRemove(item.id);
 
   return (
@@ -28,25 +28,11 @@ function CartItem({ item, onCartUpdate, onCartRemove }) {
         </Box>
       </CardContent>
       <CardActions sx={styles.cardActions}>
-        <Box sx={styles.buttons}>
-          <Button
-            onClick={() => onCartUpdate(item.id, item.quantity + 1)}
-            type="button"
-            size="small"
-            color="info"
-          >
-            +
-          </Button>
-          <Typography variant="h6">{item.quantity}</Typography>
-          <Button
-            onClick={() => onCartUpdate(item.id, item.quantity - 1)}
-            type="button"
-            size="small"
-            color="info"
-          >
-            -
-          </Button>
-        </Box>
+        <Typography>{`${name.length > 1 ? "Names" : "Name"}:${name.map(
+          (text) => " " + text.name[0].toUpperCase() +
+          text.name.slice(1)
+        )}`}</Typography>
+
         <Button
           onClick={handleRemoveFromCart}
           type="button"

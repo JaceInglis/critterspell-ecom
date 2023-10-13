@@ -1,16 +1,18 @@
 import {
   Box,
   TextField,
-  Tooltip,
   Typography,
-  Button,
   FormControl,
   Select,
   MenuItem,
   InputLabel,
   useTheme,
+  CircularProgress,
+  Button,
 } from "@mui/material";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import CheckIcon from "@mui/icons-material/Check";
 
 const letters = {
   a: "/letters/Letters_small_A.png",
@@ -54,7 +56,7 @@ const letters = {
   " ": " ",
 };
 
-const TestName = () => {
+const TestName = ({ onAddToCart, cartLoading, products }) => {
   const [name, setName] = useState("Name");
   const [nameConfig, setNameConfig] = useState({
     n: { 0: { color: 0 } },
@@ -63,14 +65,19 @@ const TestName = () => {
 
   const theme = useTheme();
 
+  const product = products[0];
+
   const handleNameChange = (event) => {
-    const newName = event.target.value;
+    const newName = event.target.value.replace(/[^a-zA-Z\s]/g, "");
     setName(newName);
-    newName.split("").forEach((letter, index) => {
-      if (letter === "b" || letter === "n" || letter === "e" || letter === "i") {
-        handleAddConfig(letter, index);
-      }
-    });
+    newName
+      .toLowerCase()
+      .split("")
+      .forEach((letter, index) => {
+        if (["b", "n", "e", "i"].includes(letter)) {
+          handleAddConfig(letter, index);
+        }
+      });
   };
 
   const handleChangeColor = (letter, index) => (event) => {
@@ -91,9 +98,9 @@ const TestName = () => {
     }));
   };
 
-  useEffect(() => {
-    console.log("config", nameConfig);
-  }, [nameConfig]);
+  const handleAddToCart = () => {
+    onAddToCart(product.id, 1, { name: name, nameConfig: nameConfig });
+  };
 
   return (
     <Box
@@ -104,7 +111,7 @@ const TestName = () => {
       my={theme.spacing(8)}
     >
       <Typography variant="h1" gutterBottom>
-        See how your childs name would look
+        Create your childs name art
       </Typography>
       <TextField
         label="Name"
@@ -119,7 +126,7 @@ const TestName = () => {
           .map((letter, index) => {
             if (letter === " ") {
               return <Box minWidthidth={50} width={50} key={index} />;
-            } else if (letter === "b" || letter === "n" || letter === "e" || letter === "i") {
+            } else if (["b", "n", "e", "i"].includes(letter)) {
               return (
                 <Box
                   key={index}
@@ -174,6 +181,36 @@ const TestName = () => {
               );
             }
           })}
+      </Box>
+      <Box sx={{ display: "flex", alignItems: "center", mt: 8 }}>
+        <Box display="flex" justifyContent="center" alignItems="center">
+          {cartLoading ? (
+            <CircularProgress />
+          ) : (
+            <Button onClick={handleAddToCart} variant="contained" size="large">
+              Add to Cart
+            </Button>
+          )}
+        </Box>
+        {cartLoading !== null && cartLoading !== true ? (
+          <Box sx={{ display: "flex", alignItems: "center", ml: 2 }}>
+            <Typography mr={1}>
+              Item added to{" "}
+              <Typography
+                component={Link}
+                to="/cart"
+                color="primary"
+                sx={{
+                  textDecoration: "none",
+                  ":hover": { textDecoration: "underline" },
+                }}
+              >
+                your cart
+              </Typography>
+            </Typography>{" "}
+            <CheckIcon color="success" />
+          </Box>
+        ) : null}
       </Box>
     </Box>
   );

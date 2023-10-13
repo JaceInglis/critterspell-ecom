@@ -17,7 +17,7 @@ import { useTheme } from "@mui/material/styles";
 import ShoppingBagOutlinedIcon from '@mui/icons-material/ShoppingBagOutlined';
 import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
 
-const Cart = ({ cart, onCartUpdate, onCartRemove }) => {
+const Cart = ({ cart, onCartRemove, name }) => {
   const theme = useTheme();
 
   const styles = Styles(theme);
@@ -68,7 +68,7 @@ const Cart = ({ cart, onCartUpdate, onCartRemove }) => {
           <Grid item xs={12} sm={4} key={item.id}>
             <CartItem
               item={item}
-              onCartUpdate={onCartUpdate}
+              name={name}
               onCartRemove={onCartRemove}
             />
           </Grid>
