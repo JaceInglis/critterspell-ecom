@@ -41,7 +41,7 @@ export const Styles = (theme) => ({
     zIndex: -1,
     filter: "blur(2px)",
     WebkitFilter: "blur(2px)",
-    backgroundImage: "url(pexels-pnw-production-7677894.jpg)",
+    backgroundImage: "url(IMG_6049.jpeg)",
     backgroundSize: "cover",
     backgroundPosition: "center",
     opacity: 0.8,

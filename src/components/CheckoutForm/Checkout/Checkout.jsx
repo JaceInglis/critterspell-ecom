@@ -30,6 +30,7 @@ function Checkout({ cart, order, onCaptureCheckout, error, name }) {
   const styles = Styles(theme);
 
   useEffect(() => {
+    if (!cart.id) return;
     const generateToken = async () => {
       try {
         const token = await commerce.checkout.generateToken(cart.id, {

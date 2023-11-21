@@ -9,7 +9,7 @@ import Home from "./components/Home/Home";
 import Footer from "./components/Footer/Footer";
 import theme from "./theme";
 
-import { Box, ThemeProvider } from "@mui/material";
+import { Box, ThemeProvider, CssBaseline } from "@mui/material";
 
 function App() {
   const [products, setProducts] = useState([]);
@@ -89,56 +89,59 @@ function App() {
   }, []);
 
   return (
-    <ThemeProvider theme={theme}>
-      <Router>
-        <Box
-          sx={{ minHeight: "90vh", display: "flex", flexDirection: "column" }}
-        >
-          <Navbar totalItems={cart.total_items} />
-          <Routes>
-            <Route
-              exact
-              path="/"
-              element={
-                <Home
-                  products={products}
-                  cart={cart}
-                  cartLoading={cartLoading}
-                  onAddToCart={handleAddToCart}
-                />
-              }
-            />
+    <>
+      <CssBaseline />
+      <ThemeProvider theme={theme}>
+        <Router>
+          <Box
+            sx={{ minHeight: "90vh", display: "flex", flexDirection: "column" }}
+          >
+            <Navbar totalItems={cart.total_items} />
+            <Routes>
+              <Route
+                exact
+                path="/"
+                element={
+                  <Home
+                    products={products}
+                    cart={cart}
+                    cartLoading={cartLoading}
+                    onAddToCart={handleAddToCart}
+                  />
+                }
+              />
 
-            <Route
-              exact
-              path="/cart"
-              element={
-                <Cart
-                  cart={cart}
-                  name={name}
-                  onCartRemove={handleRemoveFromCart}
-                />
-              }
-            />
+              <Route
+                exact
+                path="/cart"
+                element={
+                  <Cart
+                    cart={cart}
+                    name={name}
+                    onCartRemove={handleRemoveFromCart}
+                  />
+                }
+              />
 
-            <Route
-              exact
-              path="/checkout"
-              element={
-                <Checkout
-                  cart={cart}
-                  name={name}
-                  order={order}
-                  onCaptureCheckout={handleCaptureCheckout}
-                  error={errorMessage}
-                />
-              }
-            />
-          </Routes>
-        </Box>
-        <Footer />
-      </Router>
-    </ThemeProvider>
+              <Route
+                exact
+                path="/checkout"
+                element={
+                  <Checkout
+                    cart={cart}
+                    name={name}
+                    order={order}
+                    onCaptureCheckout={handleCaptureCheckout}
+                    error={errorMessage}
+                  />
+                }
+              />
+            </Routes>
+          </Box>
+          <Footer />
+        </Router>
+      </ThemeProvider>
+    </>
   );
 }
 

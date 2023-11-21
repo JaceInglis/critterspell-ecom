@@ -13,13 +13,10 @@ export const Styles = (theme) => ({
     display: "flex",
     [theme.breakpoints.down("sm")]: {
       flexDirection: "column-reverse",
-      padding: theme.spacing(4),
-      gap: theme.spacing(4),
       alignItems: "space-between",
     },
     justifyContent: "space-between",
     alignItems: "center",
-    padding: `${theme.spacing(6)} 0px`,
   },
   wrapper: {
     backgroundColor: theme.palette.quaternary.main,

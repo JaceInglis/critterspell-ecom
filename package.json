@@ -18,9 +18,11 @@
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.41.5",
     "react-router-dom": "^6.6.1",
-    "react-scripts": "^5.0.1",
     "react-scroll": "^1.8.9",
     "web-vitals": "^2.1.4"
+  },
+  "devDependencies": {
+    "react-scripts": "^5.0.1"
   },
   "scripts": {
     "start": "react-scripts start",

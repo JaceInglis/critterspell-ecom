@@ -1,8 +1,13 @@
 import React from "react";
-import { Box, Typography, Container, useTheme } from "@mui/material";
+import {
+  Box,
+  Typography,
+  Container,
+  useTheme,
+  useMediaQuery,
+} from "@mui/material";
 import { Styles, Offset } from "./styles";
 
-import Products from "../Products/Products";
 import Banner from "./Banner/Banner";
 import TestName from "../TestName/TestName";
 
@@ -10,14 +15,23 @@ function Home({ products, onAddToCart, cartLoading }) {
   const theme = useTheme();
   const styles = Styles(theme);
 
+  const mobile = useMediaQuery(theme.breakpoints.down("sm"));
+
   return (
     <>
       <Offset />
       <Box sx={styles.container}>
         <Banner />
-        <Box id="products" sx={styles.wrapper} mt={theme.spacing(8)}>
-          <Container sx={styles.content} maxWidth="xl">
-            <Box maxWidth="md">
+        <Container sx={styles.content} maxWidth="xl">
+          <TestName
+            cartLoading={cartLoading}
+            onAddToCart={onAddToCart}
+            products={products}
+          />
+        </Container>
+        <Box sx={styles.wrapper} mb={8}>
+          <Box sx={styles.content}>
+            <Box padding={8}>
               <Typography variant="h1" gutterBottom>
                 Crafted with quality
               </Typography>
@@ -30,11 +44,13 @@ function Home({ products, onAddToCart, cartLoading }) {
                 captivate their imagination.
               </Typography>
             </Box>
-          </Container>
+            <img
+              src="IMG_6043.jpeg"
+              alt="Critterspell"
+              width={mobile ? "100%" : 700}
+            />
+          </Box>
         </Box>
-        <Container sx={styles.content} maxWidth="xl">
-          <TestName cartLoading={cartLoading} onAddToCart={onAddToCart} products={products}/>
-        </Container>
       </Box>
     </>
   );

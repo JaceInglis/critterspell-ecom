@@ -22,7 +22,7 @@ const theme = createTheme({
     },
   },
   typography: {
-    fontFamily: "Arial, sans-serif",
+    fontFamily: ['"Inter"', "Arial", "sans-serif"].join(","),
     h1: {
       fontSize: "3rem",
       fontWeight: "bold",
@@ -47,13 +47,12 @@ const theme = createTheme({
     footer: "118px",
     mobileFooter: "138px",
   },
-  overrides: {
+  components: {
     MuiButton: {
-      containedPrimary: {
-        backgroundColor: "#FF5252",
-      },
-      containedSecondary: {
-        backgroundColor: "#03A9F4",
+      styleOverrides: {
+        root: {
+          borderRadius: "50px",
+        },
       },
     },
   },
