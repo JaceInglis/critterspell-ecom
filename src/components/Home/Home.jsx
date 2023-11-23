@@ -22,7 +22,7 @@ function Home({ products, onAddToCart, cartLoading }) {
       <Offset />
       <Box sx={styles.container}>
         <Banner />
-        <Container sx={styles.content} maxWidth="xl">
+        <Container sx={styles.content} maxWidth="xl" id="nameTest">
           <TestName
             cartLoading={cartLoading}
             onAddToCart={onAddToCart}

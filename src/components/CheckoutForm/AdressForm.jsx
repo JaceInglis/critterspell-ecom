@@ -17,7 +17,7 @@ import { commerce } from "../../lib/commerce";
 import FormInput from "./CustomTextField";
 
 function AdressForm({ checkoutToken, next }) {
-  console.log(checkoutToken)
+  console.log(checkoutToken);
   const [shippingCountries, setShippingCountries] = useState([]);
   const [shippingCountry, setShippingCountry] = useState("");
   const [shippingSubdivisions, setShippingSubdivisions] = useState([]);
@@ -54,17 +54,10 @@ function AdressForm({ checkoutToken, next }) {
     setShippingSubdivision(Object.keys(subdivisions)[0]);
   };
 
-  const fetchShippingMethods = async (
-    checkoutTokenId,
-    country,
-    region = null
-  ) => {
+  const fetchShippingMethods = async (checkoutTokenId, country) => {
     const shippingOptions = await commerce.checkout.getShippingOptions(
       checkoutTokenId,
-      {
-        country: country,
-        region: region,
-      }
+      { country: country }
     );
 
     setShippingOptions(shippingOptions);
@@ -73,12 +66,19 @@ function AdressForm({ checkoutToken, next }) {
 
   useEffect(() => {
     fetchShippingCountries(checkoutToken.id);
-  }, []);
+  }, [checkoutToken.id]);
 
   useEffect(() => {
-    shippingCountry && fetchSubdivisions(shippingCountry);
-    fetchShippingMethods(checkoutToken.id, shippingCountry);
-  }, [shippingCountry]);
+    if (!shippingCountry) return;
+    const fetchData = async () => {
+      await Promise.all([
+        fetchSubdivisions(shippingCountry),
+        fetchShippingMethods(checkoutToken.id, shippingCountry),
+      ]);
+    };
+
+    fetchData();
+  }, [shippingCountry, checkoutToken.id]);
 
   return (
     <>
@@ -106,6 +106,7 @@ function AdressForm({ checkoutToken, next }) {
               <InputLabel>Shipping Country</InputLabel>
               <Select
                 variant="standard"
+                name="country"
                 value={shippingCountry}
                 fullWidth
                 onChange={(e) => setShippingCountry(e.target.value)}
@@ -121,6 +122,7 @@ function AdressForm({ checkoutToken, next }) {
             <Grid item xs={12} sm={6}>
               <InputLabel>Shipping Subdivisons</InputLabel>
               <Select
+                name="provinceState"
                 variant="standard"
                 value={shippingSubdivision}
                 fullWidth
@@ -137,6 +139,7 @@ function AdressForm({ checkoutToken, next }) {
             <Grid item xs={12}>
               <InputLabel>Shipping Options</InputLabel>
               <Select
+                name="shippingOption"
                 variant="standard"
                 value={shippingOption}
                 fullWidth

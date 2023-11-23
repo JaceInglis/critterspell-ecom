@@ -26,7 +26,7 @@ const Banner = () => {
         invite you to browse our collection and discover the perfect combination
         of animals to spell out your child's name.
       </Typography>
-      <Link to="products" smooth={true} duration={500}>
+      <Link to="nameTest" smooth={true} duration={500}>
         <Button width="200px" size="large" variant="contained">
           Buy Now
         </Button>

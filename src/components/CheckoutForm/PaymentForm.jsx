@@ -23,8 +23,6 @@ function PaymentForm({
 }) {
   const theme = useTheme();
 
-  console.log(name)
-
   const handleSubmit = async (event, elements, stripe) => {
     event.preventDefault();
 

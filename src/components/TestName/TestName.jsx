@@ -65,6 +65,12 @@ const TestName = ({ onAddToCart, cartLoading, products }) => {
 
   const theme = useTheme();
 
+  const imgStyle = {
+    height: "auto",
+    maxHeight: "200px",
+    maxWidth: "100%",
+  };
+
   const product = products[0];
 
   const handleNameChange = (event) => {
@@ -110,16 +116,17 @@ const TestName = ({ onAddToCart, cartLoading, products }) => {
       width="100%"
       my={theme.spacing(8)}
     >
-      <Typography variant="h1" gutterBottom>
+      <Typography variant="h1" gutterBottom textAlign={"center"}>
         Create your childs name art
       </Typography>
       <TextField
         label="Name"
+        name="name"
         variant="outlined"
         value={name}
         onChange={handleNameChange}
       />
-      <Box height={250} display="flex" justifyContent="center" mt={6}>
+      <Box display="flex" justifyContent="center" mt={4} mb={2}>
         {name
           .toLowerCase()
           .split("")
@@ -131,7 +138,6 @@ const TestName = ({ onAddToCart, cartLoading, products }) => {
                 <Box
                   key={index}
                   sx={{
-                    width: "135px",
                     position: "relative",
                     display: "flex",
                     flexDirection: "column",
@@ -142,14 +148,15 @@ const TestName = ({ onAddToCart, cartLoading, products }) => {
                     variant="standard"
                     fullWidth
                     sx={{
-                      marginBottom: "-15px",
                       position: "absolute",
                       bottom: 0,
-                      width: "60%",
+                      marginBottom: "-50px",
+                      width: "90%",
                     }}
                   >
                     <InputLabel id={`select-label-${index}`}>Color</InputLabel>
                     <Select
+                      name="color"
                       labelId={`select-label-${index}`}
                       value={nameConfig[letter][index].color}
                       label="Color"
@@ -160,10 +167,7 @@ const TestName = ({ onAddToCart, cartLoading, products }) => {
                     </Select>
                   </FormControl>
                   <img
-                    style={{
-                      maxWidth: "210px",
-                      maxHeight: "200px",
-                    }}
+                    style={imgStyle}
                     src={letters[letter][nameConfig[letter][index].color].src}
                     alt={letter}
                   />
@@ -172,11 +176,7 @@ const TestName = ({ onAddToCart, cartLoading, products }) => {
             } else {
               return (
                 <Box key={index}>
-                  <img
-                    style={{ maxWidth: "210px", maxHeight: "200px" }}
-                    src={letters[letter]}
-                    alt={letter}
-                  />
+                  <img style={imgStyle} src={letters[letter]} alt={letter} />
                 </Box>
               );
             }
