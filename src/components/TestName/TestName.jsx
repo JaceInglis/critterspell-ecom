@@ -12,6 +12,7 @@ import {
 } from "@mui/material";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import _ from "lodash";
 import CheckIcon from "@mui/icons-material/Check";
 
 const letters = {
@@ -75,6 +76,28 @@ const TestName = ({ onAddToCart, cartLoading, products }) => {
 
   const handleNameChange = (event) => {
     const newName = event.target.value.replace(/[^a-zA-Z\s]/g, "");
+
+    const removedLetters = _.difference([...name], [...newName]);
+
+    removedLetters.forEach((removeLetter) => {
+      const letter = removeLetter.toLowerCase();
+      if (!["b", "n", "e", "i"].includes(letter)) return;
+
+      const instance = nameConfig[letter];
+
+      const clone = _.cloneDeep(nameConfig);
+
+      let deleteLetter;
+
+      if (Object.keys(instance).length !== 1) {
+        deleteLetter = delete clone[letter][_.max(Object.keys(instance))];
+      } else {
+        deleteLetter = delete clone[letter];
+      }
+
+      setNameConfig(clone);
+    });
+
     setName(newName);
     newName
       .toLowerCase()
