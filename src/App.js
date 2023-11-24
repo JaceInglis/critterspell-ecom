@@ -10,6 +10,7 @@ import Footer from "./components/Footer/Footer";
 import theme from "./theme";
 
 import { Box, ThemeProvider, CssBaseline } from "@mui/material";
+import ScrollToTop from "./components/ScrollToTop/ScrollToTop";
 
 function App() {
   const [products, setProducts] = useState([]);
@@ -93,52 +94,58 @@ function App() {
       <CssBaseline />
       <ThemeProvider theme={theme}>
         <Router>
-          <Box
-            sx={{ minHeight: "90vh", display: "flex", flexDirection: "column" }}
-          >
-            <Navbar totalItems={cart.total_items} />
-            <Routes>
-              <Route
-                exact
-                path="/"
-                element={
-                  <Home
-                    products={products}
-                    cart={cart}
-                    cartLoading={cartLoading}
-                    onAddToCart={handleAddToCart}
-                  />
-                }
-              />
+          <ScrollToTop>
+            <Box
+              sx={{
+                minHeight: "90vh",
+                display: "flex",
+                flexDirection: "column",
+              }}
+            >
+              <Navbar totalItems={cart.total_items} />
+              <Routes>
+                <Route
+                  exact
+                  path="/"
+                  element={
+                    <Home
+                      products={products}
+                      cart={cart}
+                      cartLoading={cartLoading}
+                      onAddToCart={handleAddToCart}
+                    />
+                  }
+                />
 
-              <Route
-                exact
-                path="/cart"
-                element={
-                  <Cart
-                    cart={cart}
-                    name={name}
-                    onCartRemove={handleRemoveFromCart}
-                  />
-                }
-              />
+                <Route
+                  exact
+                  path="/cart"
+                  element={
+                    <Cart
+                      cart={cart}
+                      name={name}
+                      onCartRemove={handleRemoveFromCart}
+                    />
+                  }
+                />
 
-              <Route
-                exact
-                path="/checkout"
-                element={
-                  <Checkout
-                    cart={cart}
-                    name={name}
-                    order={order}
-                    onCaptureCheckout={handleCaptureCheckout}
-                    error={errorMessage}
-                  />
-                }
-              />
-            </Routes>
-          </Box>
-          <Footer />
+                <Route
+                  exact
+                  path="/checkout"
+                  element={
+                    <Checkout
+                      cart={cart}
+                      name={name}
+                      order={order}
+                      onCaptureCheckout={handleCaptureCheckout}
+                      error={errorMessage}
+                    />
+                  }
+                />
+              </Routes>
+            </Box>
+            <Footer />
+          </ScrollToTop>
         </Router>
       </ThemeProvider>
     </>

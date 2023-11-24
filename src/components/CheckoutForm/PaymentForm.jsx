@@ -23,6 +23,8 @@ function PaymentForm({
 }) {
   const theme = useTheme();
 
+  console.log(shippingData.shippingOption.id, 'id')
+
   const handleSubmit = async (event, elements, stripe) => {
     event.preventDefault();
 
@@ -53,7 +55,7 @@ function PaymentForm({
           postal_zip_code: shippingData.zip,
           country: shippingData.shippingCountry,
         },
-        fulfillment: { shipping_method: shippingData.shippingOption },
+        fulfillment: { shipping_method: shippingData.shippingOption.id },
         billing: {
           name: shippingData.firstName + " " + shippingData.lastName,
           street: shippingData.address1,
@@ -73,6 +75,8 @@ function PaymentForm({
         },
       };
 
+      console.log(orderData)
+
       onCaptureCheckout(checkoutToken.id, orderData);
 
       nextStep();
@@ -81,7 +85,10 @@ function PaymentForm({
 
   return (
     <>
-      <Review checkoutToken={checkoutToken} />
+      <Review
+        checkoutToken={checkoutToken}
+        shippingOption={shippingData.shippingOption}
+      />
       <Divider />
       <Typography mb={3} mt={1} variant="h6" gutterBottom>
         Payment method
@@ -119,7 +126,11 @@ function PaymentForm({
                   size="large"
                   disabled={!stripe}
                 >
-                  Pay {checkoutToken.subtotal.formatted_with_symbol}
+                  Pay{" "}
+                  ${(
+                    parseFloat(checkoutToken.total.formatted) +
+                    parseFloat(shippingData.shippingOption.price.formatted)
+                  ).toFixed(2)}
                 </Button>
               </Box>
             </form>

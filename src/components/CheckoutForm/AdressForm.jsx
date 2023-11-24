@@ -17,13 +17,12 @@ import { commerce } from "../../lib/commerce";
 import FormInput from "./CustomTextField";
 
 function AdressForm({ checkoutToken, next }) {
-  console.log(checkoutToken);
   const [shippingCountries, setShippingCountries] = useState([]);
   const [shippingCountry, setShippingCountry] = useState("");
   const [shippingSubdivisions, setShippingSubdivisions] = useState([]);
   const [shippingSubdivision, setShippingSubdivision] = useState("");
   const [shippingOptions, setShippingOptions] = useState([]);
-  const [shippingOption, setShippingOption] = useState("");
+  const [shippingOption, setShippingOption] = useState({});
 
   const methods = useForm();
   const theme = useTheme();
@@ -61,7 +60,7 @@ function AdressForm({ checkoutToken, next }) {
     );
 
     setShippingOptions(shippingOptions);
-    setShippingOption(shippingOptions[0].id);
+    setShippingOption(shippingOptions[0]);
   };
 
   useEffect(() => {
@@ -146,7 +145,7 @@ function AdressForm({ checkoutToken, next }) {
                 onChange={(e) => setShippingOption(e.target.value)}
               >
                 {shippingOptions.map((option) => (
-                  <MenuItem key={option.id} value={option.id}>
+                  <MenuItem key={option.id} value={option}>
                     {option.description} - {option.price.formatted_with_symbol}
                   </MenuItem>
                 ))}

@@ -1,10 +1,12 @@
 import React from "react";
 import { Typography, List, ListItem, ListItemText } from "@mui/material";
 
-function Review({ checkoutToken }) {
+function Review({ checkoutToken, shippingOption }) {
+  console.log(shippingOption);
+  console.log(checkoutToken);
   return (
     <>
-      <Typography variant="h6" gutterBottom>
+      <Typography variant="h6">
         Order summary
       </Typography>
       <List disablePadding>
@@ -20,6 +22,13 @@ function Review({ checkoutToken }) {
           </ListItem>
         ))}
 
+        <ListItem sx={{ padding: "10px 0" }}>
+          <ListItemText primary={shippingOption.description + " Shipping"} />
+          <Typography variant="body2">
+            {shippingOption.price.formatted_with_symbol}
+          </Typography>
+        </ListItem>
+
         <ListItem
           sx={{
             padding: "10px 0",
@@ -30,7 +39,11 @@ function Review({ checkoutToken }) {
         >
           <ListItemText primary="Total" />
           <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>
-            {checkoutToken.total.formatted_with_symbol}
+            $
+            {(
+              parseFloat(checkoutToken.total.formatted) +
+              parseFloat(shippingOption.price.formatted)
+            ).toFixed(2)}
           </Typography>
         </ListItem>
       </List>
