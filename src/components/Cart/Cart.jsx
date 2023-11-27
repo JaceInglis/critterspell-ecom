@@ -14,8 +14,8 @@ import { Link } from "react-router-dom";
 
 import { Styles, Offset } from "./styles";
 import { useTheme } from "@mui/material/styles";
-import ShoppingBagOutlinedIcon from '@mui/icons-material/ShoppingBagOutlined';
-import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
+import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined";
+import ShoppingBagIcon from "@mui/icons-material/ShoppingBag";
 
 const Cart = ({ cart, onCartRemove, name }) => {
   const theme = useTheme();
@@ -66,11 +66,7 @@ const Cart = ({ cart, onCartRemove, name }) => {
       <Grid sx={styles.items} container>
         {cart.line_items.map((item) => (
           <Grid item xs={12} sm={4} key={item.id}>
-            <CartItem
-              item={item}
-              name={name}
-              onCartRemove={onCartRemove}
-            />
+            <CartItem item={item} name={name} onCartRemove={onCartRemove} />
           </Grid>
         ))}
       </Grid>
@@ -113,16 +109,10 @@ const Cart = ({ cart, onCartRemove, name }) => {
     <Container>
       <Offset />
       <Typography sx={styles.title} variant="h1">
-        <ShoppingBagIcon sx={{fontSize: 50}}/> Your Shopping Cart
+        <ShoppingBagIcon sx={{ fontSize: 50 }} /> Your Shopping Cart
       </Typography>
 
       {!cart.line_items.length ? <EmptyCart /> : <FilledCart />}
-
-      {!!cart.line_items.length && (
-        <Alert severity="info" sx={{ marginTop: theme.spacing(4) }}>
-          At the checkout stage, you'll be prompted to provide the child's name.
-        </Alert>
-      )}
     </Container>
   );
 };

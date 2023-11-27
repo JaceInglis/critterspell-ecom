@@ -24,7 +24,6 @@ const Footer = () => {
       <Paper
         elevation={12}
         component="footer"
-        position
         sx={{ bottom: 0, width: "100%" }}
         square
       >

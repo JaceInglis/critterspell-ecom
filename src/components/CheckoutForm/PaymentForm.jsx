@@ -23,8 +23,6 @@ function PaymentForm({
 }) {
   const theme = useTheme();
 
-  console.log(shippingData.shippingOption.id, 'id')
-
   const handleSubmit = async (event, elements, stripe) => {
     event.preventDefault();
 
@@ -75,8 +73,6 @@ function PaymentForm({
         },
       };
 
-      console.log(orderData)
-
       onCaptureCheckout(checkoutToken.id, orderData);
 
       nextStep();
@@ -126,11 +122,7 @@ function PaymentForm({
                   size="large"
                   disabled={!stripe}
                 >
-                  Pay{" "}
-                  ${(
-                    parseFloat(checkoutToken.total.formatted) +
-                    parseFloat(shippingData.shippingOption.price.formatted)
-                  ).toFixed(2)}
+                  Pay Now
                 </Button>
               </Box>
             </form>
