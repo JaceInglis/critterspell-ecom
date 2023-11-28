@@ -10,10 +10,11 @@ import {
   CircularProgress,
   Button,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import _ from "lodash";
 import CheckIcon from "@mui/icons-material/Check";
+import { styles } from "./styles";
 
 const letters = {
   a: "/letters/Letters_small_A.png",
@@ -54,7 +55,6 @@ const letters = {
   x: "/letters/Letters_small_X.png",
   y: "/letters/Letters_small_Y.png",
   z: "/letters/Letters_small_Z.png",
-  " ": " ",
 };
 
 const TestName = ({ onAddToCart, cartLoading, products }) => {
@@ -63,19 +63,14 @@ const TestName = ({ onAddToCart, cartLoading, products }) => {
     n: { 0: { color: 0 } },
     e: { 3: { color: 0 } },
   });
+  const [boxStyles, setBoxStyles] = useState([]);
 
   const theme = useTheme();
-
-  const imgStyle = {
-    height: "auto",
-    maxHeight: "200px",
-    maxWidth: "100%",
-  };
 
   const product = products[0];
 
   const handleNameChange = (event) => {
-    const newName = event.target.value.replace(/[^a-zA-Z\s]/g, "");
+    const newName = event.target.value.replace(/[^a-zA-Z]/g, "");
 
     const removedLetters = _.difference([...name], [...newName]);
 
@@ -87,12 +82,10 @@ const TestName = ({ onAddToCart, cartLoading, products }) => {
 
       const clone = _.cloneDeep(nameConfig);
 
-      let deleteLetter;
-
       if (Object.keys(instance).length !== 1) {
-        deleteLetter = delete clone[letter][_.max(Object.keys(instance))];
+        delete clone[letter][_.max(Object.keys(instance))];
       } else {
-        deleteLetter = delete clone[letter];
+        delete clone[letter];
       }
 
       setNameConfig(clone);
@@ -127,9 +120,65 @@ const TestName = ({ onAddToCart, cartLoading, products }) => {
     }));
   };
 
+  const getLetterStyles = (name) => {
+    name.split("").forEach((letter, index) => {
+      const prevLetter = index > 0 ? name[index - 1].toLowerCase() : null;
+      const nextLetter =
+        index < name.length - 1 ? name[index + 1].toLowerCase() : null;
+
+      console.log(prevLetter, ["a", "q", "o", "c", "m"].includes(prevLetter));
+      console.log(nextLetter);
+
+      let boxStyle = {};
+
+      // Check if the current letter is 't', 'f', or 'y' and its neighbor is 'a', 'q', 'o', 'c', or 'm'
+      if (
+        ["t", "y"].includes(letter) &&
+        ["a", "q", "o", "c", "m"].includes(prevLetter)
+      ) {
+        boxStyle = { ...boxStyle, marginLeft: "-20px" };
+      }
+
+      if (letter === "r") {
+        boxStyle = { ...boxStyle, marginLeft: "-10px" };
+      }
+
+      if (letter === "r" && ["b", "n", "p"].includes(nextLetter)) {
+        boxStyle = { ...boxStyle, marginLeft: "-20px" };
+      }
+
+      if (
+        ["t", "f", "y"].includes(letter) &&
+        ["a", "q", "o", "c", "m"].includes(nextLetter)
+      ) {
+        if (letter === "t" && nextLetter === "o") {
+          boxStyle = { ...boxStyle, marginRight: "-10px" };
+        }
+
+        if (letter === "f" && nextLetter === "a") {
+          boxStyle = { ...boxStyle, marginRight: "-30px" };
+        }
+
+        if (letter !== ("f" || "t")) {
+          boxStyle = { ...boxStyle, marginRight: "-20px" };
+        }
+      }
+
+      setBoxStyles((prevStyles) => [
+        ...prevStyles.slice(0, index),
+        { ...prevStyles[index], ...boxStyle },
+        ...prevStyles.slice(index + 1),
+      ]);
+    });
+  };
+
   const handleAddToCart = () => {
     onAddToCart(product.id, 1, { name: name, nameConfig: nameConfig });
   };
+
+  useEffect(() => {
+    getLetterStyles(name);
+  }, [name]);
 
   return (
     <Box
@@ -154,29 +203,10 @@ const TestName = ({ onAddToCart, cartLoading, products }) => {
           .toLowerCase()
           .split("")
           .map((letter, index) => {
-            if (letter === " ") {
-              return <Box minWidthidth={50} width={50} key={index} />;
-            } else if (["b", "n", "e", "i"].includes(letter)) {
+            if (["b", "n", "e", "i"].includes(letter)) {
               return (
-                <Box
-                  key={index}
-                  sx={{
-                    position: "relative",
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                  }}
-                >
-                  <FormControl
-                    variant="standard"
-                    fullWidth
-                    sx={{
-                      position: "absolute",
-                      bottom: 0,
-                      marginBottom: "-50px",
-                      width: "90%",
-                    }}
-                  >
+                <Box key={index} sx={styles.letterBox}>
+                  <FormControl variant="standard" fullWidth sx={styles.form}>
                     <InputLabel id={`select-label-${index}`}>Color</InputLabel>
                     <Select
                       name="color"
@@ -190,43 +220,47 @@ const TestName = ({ onAddToCart, cartLoading, products }) => {
                     </Select>
                   </FormControl>
                   <img
-                    style={imgStyle}
+                    style={styles.img}
                     src={letters[letter][nameConfig[letter][index].color].src}
                     alt={letter}
                   />
                 </Box>
               );
             } else {
+              const letterStyle = boxStyles[index] || {};
+              console.log("letterStyle:", letterStyle);
               return (
-                <Box key={index}>
-                  <img style={imgStyle} src={letters[letter]} alt={letter} />
+                <Box key={index} sx={letterStyle}>
+                  <img style={styles.img} src={letters[letter]} alt={letter} />
                 </Box>
               );
             }
           })}
       </Box>
-      <Box sx={{ display: "flex", alignItems: "center", mt: 8 }}>
+      <Box sx={styles.addToCart}>
         <Box display="flex" justifyContent="center" alignItems="center">
           {cartLoading ? (
             <CircularProgress />
           ) : (
-            <Button onClick={handleAddToCart} variant="contained" size="large">
+            <Button
+              disabled={!name}
+              onClick={handleAddToCart}
+              variant="contained"
+              size="large"
+            >
               Add to Cart
             </Button>
           )}
         </Box>
         {cartLoading !== null && cartLoading !== true ? (
-          <Box sx={{ display: "flex", alignItems: "center", ml: 2 }}>
+          <Box sx={styles.message}>
             <Typography mr={1}>
               Item added to{" "}
               <Typography
                 component={Link}
                 to="/cart"
                 color="primary"
-                sx={{
-                  textDecoration: "none",
-                  ":hover": { textDecoration: "underline" },
-                }}
+                sx={styles.messageLink}
               >
                 your cart
               </Typography>

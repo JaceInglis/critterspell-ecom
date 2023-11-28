@@ -63,9 +63,13 @@ function PaymentForm({
           country: shippingData.shippingCountry,
         },
         payment: {
-          gateway: "stripe",
-          stripe: {
-            payment_method_id: paymentMethod.id,
+          gateway: 'test_gateway',
+          card: {
+            number: '4242424242424242',
+            expiry_month: '02',
+            expiry_year: '24',
+            cvc: '123',
+            postal_zip_code: '94107',
           },
         },
         extra_fields: {

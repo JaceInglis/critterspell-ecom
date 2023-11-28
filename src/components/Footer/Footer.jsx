@@ -13,20 +13,16 @@ import FacebookIcon from "@mui/icons-material/Facebook";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import TwitterIcon from "@mui/icons-material/Twitter";
 
-import { styles } from "./styles";
+import { Styles } from "./styles";
 
 const Footer = () => {
   const theme = useTheme();
   const mobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const styles = Styles(theme);
 
   return (
     <>
-      <Paper
-        elevation={12}
-        component="footer"
-        sx={{ bottom: 0, width: "100%" }}
-        square
-      >
+      <Paper elevation={12} component="footer" sx={styles.paper} square>
         <Container
           maxWidth="xl"
           sx={{
@@ -34,25 +30,8 @@ const Footer = () => {
             flexDirection: "column",
           }}
         >
-          <Box
-            sx={{
-              flexGrow: 1,
-              my: 2,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-              [theme.breakpoints.down("sm")]: {
-                flexDirection: "column",
-              },
-            }}
-          >
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                gap: 1,
-              }}
-            >
+          <Box sx={styles.content}>
+            <Box sx={styles.logo}>
               <Link href="/">
                 <Box
                   component="img"
@@ -73,21 +52,13 @@ const Footer = () => {
               </Typography>
             </Box>
 
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "space-around",
-                flexDirection: "column",
-                [theme.breakpoints.down("sm")]: {
-                  alignItems: "center",
-                },
-                gap: 1,
-              }}
-            >
+            <Box sx={styles.contact}>
               <Typography variant="h6" mt={mobile && 2}>
                 Get in touch
               </Typography>
-              <Link underline="hover" href="tel:250-826-7984">250-826-7984</Link>
+              <Link underline="hover" href="tel:250-826-7984">
+                250-826-7984
+              </Link>
               <Link underline="hover" href="mailto:critterspell@fun.com">
                 critterspell@fun.com
               </Link>
@@ -97,10 +68,7 @@ const Footer = () => {
           <Divider />
 
           <Box>
-            <Box
-              width="100%"
-              sx={{ display: "flex", justifyContent: "center", gap: 4, my: 2 }}
-            >
+            <Box width="100%" sx={styles.socials}>
               <FacebookIcon />
               <InstagramIcon />
               <TwitterIcon />

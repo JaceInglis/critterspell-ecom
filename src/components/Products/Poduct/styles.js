@@ -14,4 +14,6 @@ export const styles = {
     display: "flex",
     justifyContent: "space-between",
   },
+  loadingAction: { display: "flex", alignItems: "center" },
+  message: { display: "flex", alignItems: "center" },
 };

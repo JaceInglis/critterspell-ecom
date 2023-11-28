@@ -43,7 +43,7 @@ const Product = ({ product, onAddToCart, cartLoading }) => {
             color="textSecondary"
           />
         </CardContent>
-        <Box sx={{ display: "flex", alignItems: "center" }}>
+        <Box sx={styles.loadingAction}>
           <Box
             width={56}
             height={56}
@@ -62,7 +62,7 @@ const Product = ({ product, onAddToCart, cartLoading }) => {
             )}
           </Box>
           {cartLoading !== null && cartLoading !== true ? (
-            <Box sx={{ display: "flex", alignItems: "center" }}>
+            <Box sx={styles.message}>
               <Typography mr={1}>
                 Item added to{" "}
                 <Link href="/cart" underline="hover">
