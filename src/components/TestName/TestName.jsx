@@ -69,27 +69,47 @@ const TestName = ({ onAddToCart, cartLoading, products }) => {
 
   const product = products[0];
 
+  const addPositionIdentifier = (str) => {
+    return str.split("").map((char, index) => char + index);
+  };
+
+  const removePositionIdentifier = (strWithPosition) => {
+    return strWithPosition.map((charWithPosition) =>
+      charWithPosition.charAt(0)
+    );
+  };
+
   const handleNameChange = (event) => {
     const newName = event.target.value.replace(/[^a-zA-Z]/g, "");
 
-    const removedLetters = _.difference([...name], [...newName]);
+    const removedLettersWithId = _.difference(
+      addPositionIdentifier(name),
+      addPositionIdentifier(newName)
+    );
 
-    removedLetters.forEach((removeLetter) => {
-      const letter = removeLetter.toLowerCase();
-      if (!["b", "n", "e", "i"].includes(letter)) return;
+    if (removedLettersWithId) {
+      const removedLetters = removePositionIdentifier(removedLettersWithId);
 
-      const instance = nameConfig[letter];
+      removedLetters.forEach((removeLetter) => {
+        const letter = removeLetter.toLowerCase();
 
-      const clone = _.cloneDeep(nameConfig);
+        setBoxStyles((prevStyles) => prevStyles.slice(0, -1));
 
-      if (Object.keys(instance).length !== 1) {
-        delete clone[letter][_.max(Object.keys(instance))];
-      } else {
-        delete clone[letter];
-      }
+        if (!["b", "n", "e", "i"].includes(letter)) return;
 
-      setNameConfig(clone);
-    });
+        const instance = nameConfig[letter];
+
+        const clone = _.cloneDeep(nameConfig);
+
+        if (Object.keys(instance).length !== 1) {
+          delete clone[letter][_.max(Object.keys(instance))];
+        } else {
+          delete clone[letter];
+        }
+
+        setNameConfig(clone);
+      });
+    }
 
     setName(newName);
     newName
@@ -126,12 +146,8 @@ const TestName = ({ onAddToCart, cartLoading, products }) => {
       const nextLetter =
         index < name.length - 1 ? name[index + 1].toLowerCase() : null;
 
-      console.log(prevLetter, ["a", "q", "o", "c", "m"].includes(prevLetter));
-      console.log(nextLetter);
-
       let boxStyle = {};
 
-      // Check if the current letter is 't', 'f', or 'y' and its neighbor is 'a', 'q', 'o', 'c', or 'm'
       if (
         ["t", "y"].includes(letter) &&
         ["a", "q", "o", "c", "m"].includes(prevLetter)
@@ -143,25 +159,32 @@ const TestName = ({ onAddToCart, cartLoading, products }) => {
         boxStyle = { ...boxStyle, marginLeft: "-10px" };
       }
 
-      if (letter === "r" && ["b", "n", "p"].includes(nextLetter)) {
-        boxStyle = { ...boxStyle, marginLeft: "-20px" };
+      if (["b", "n", "p"].includes(letter) && prevLetter === "r") {
+        boxStyle = { ...boxStyle, marginLeft: "10px" };
       }
 
       if (
-        ["t", "f", "y"].includes(letter) &&
-        ["a", "q", "o", "c", "m"].includes(nextLetter)
+        ["a", "q", "o", "c", "m"].includes(letter) &&
+        ["t", "f", "y"].includes(prevLetter)
       ) {
-        if (letter === "t" && nextLetter === "o") {
-          boxStyle = { ...boxStyle, marginRight: "-10px" };
+        if (letter === "o" && prevLetter === "t") {
+          boxStyle = { ...boxStyle, marginLeft: "-10px" };
+        } else if (letter === "a" && prevLetter === "f") {
+          boxStyle = { ...boxStyle, marginLeft: "-30px" };
+        } else {
+          boxStyle = { ...boxStyle, marginLeft: "-20px" };
         }
+      }
 
-        if (letter === "f" && nextLetter === "a") {
-          boxStyle = { ...boxStyle, marginRight: "-30px" };
-        }
+      if (letter === "e" && !["t", "y", "j"].includes(prevLetter)) {
+        boxStyle = { ...boxStyle, marginLeft: "5px" };
+      }
 
-        if (letter !== ("f" || "t")) {
-          boxStyle = { ...boxStyle, marginRight: "-20px" };
-        }
+      if (
+        !["t", "y", "c", "q", "w", "r", "e"].includes(letter) &&
+        (prevLetter === "a" || prevLetter === "m")
+      ) {
+        boxStyle = { ...boxStyle, marginLeft: "10px" };
       }
 
       setBoxStyles((prevStyles) => [
@@ -204,8 +227,10 @@ const TestName = ({ onAddToCart, cartLoading, products }) => {
           .split("")
           .map((letter, index) => {
             if (["b", "n", "e", "i"].includes(letter)) {
+              const letterStyle = boxStyles[index] || {};
+
               return (
-                <Box key={index} sx={styles.letterBox}>
+                <Box key={index} sx={{ ...styles.letterBox, ...letterStyle }}>
                   <FormControl variant="standard" fullWidth sx={styles.form}>
                     <InputLabel id={`select-label-${index}`}>Color</InputLabel>
                     <Select
@@ -228,7 +253,7 @@ const TestName = ({ onAddToCart, cartLoading, products }) => {
               );
             } else {
               const letterStyle = boxStyles[index] || {};
-              console.log("letterStyle:", letterStyle);
+
               return (
                 <Box key={index} sx={letterStyle}>
                   <img style={styles.img} src={letters[letter]} alt={letter} />
