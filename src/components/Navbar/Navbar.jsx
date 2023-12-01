@@ -4,9 +4,6 @@ import {
   Toolbar,
   IconButton,
   Badge,
-  MenuItem,
-  Menu,
-  Typography,
   Box,
 } from "@mui/material";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
@@ -20,7 +17,7 @@ const Navbar = ({ totalItems }) => {
       <AppBar position="fixed" sx={styles.appBar} color="inherit">
         <Toolbar>
           <Box sx={styles.image} component={Link} to="/">
-            <img src="Critterspellpng.png" alt="Critterspell" height="55px" />
+            <img src="CritterspellLogo.png" alt="Critterspell" height="55px" />
           </Box>
           <IconButton
             component={Link}

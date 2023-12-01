@@ -11,6 +11,7 @@ import theme from "./theme";
 
 import { Box, ThemeProvider, CssBaseline } from "@mui/material";
 import ScrollToTop from "./components/ScrollToTop/ScrollToTop";
+import MainPageMeta from "./components/MainPageMeta/MainPageMeta";
 
 function App() {
   const [products, setProducts] = useState([]);
@@ -102,6 +103,7 @@ function App() {
                 flexDirection: "column",
               }}
             >
+              <MainPageMeta />
               <Navbar totalItems={cart.total_items} />
               <Routes>
                 <Route

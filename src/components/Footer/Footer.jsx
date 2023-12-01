@@ -36,7 +36,7 @@ const Footer = () => {
                 <Box
                   component="img"
                   sx={{ display: "block" }}
-                  src="CritterSpell_logo.gif"
+                  src="CritterspellFooterLogo.gif"
                   alt="Logo"
                   width={250}
                   ml={mobile ? 1 : -1}
