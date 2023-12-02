@@ -18,6 +18,7 @@ function FormInput({ name, label, required }) {
             {...field}
           />
         )}
+        defaultValue=""
         control={control}
         name={name}
       />

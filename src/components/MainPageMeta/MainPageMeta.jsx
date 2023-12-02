@@ -25,9 +25,9 @@ const MainPageMeta = () => {
         {/* Additional SEO tags */}
         <meta
           name="keywords"
-          content="baby shower gift, newborn gift, personalized kids art, framed name art, unique baby gifts, baby room decor"
+          content="baby shower gift, newborn gift, personalized kids art, framed name art, unique baby gifts, baby room decor, custom name art"
         />
-        <meta name="author" content="Critter Spell" />
+        <meta name="author" content="Critterspell" />
         <meta name="robots" content="index, follow" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta

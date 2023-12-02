@@ -22,7 +22,9 @@ function AdressForm({ checkoutToken, next }) {
   const [shippingSubdivisions, setShippingSubdivisions] = useState([]);
   const [shippingSubdivision, setShippingSubdivision] = useState("");
   const [shippingOptions, setShippingOptions] = useState([]);
-  const [shippingOption, setShippingOption] = useState({});
+  const [shippingOption, setShippingOption] = useState("");
+
+  console.log(shippingOption.id, shippingSubdivision, shippingCountry);
 
   const methods = useForm();
   const theme = useTheme();
@@ -84,14 +86,30 @@ function AdressForm({ checkoutToken, next }) {
       <Typography variant="h6">Shipping Adress</Typography>
       <FormProvider {...methods}>
         <form
-          onSubmit={methods.handleSubmit((data) =>
+          onSubmit={methods.handleSubmit(async (data) => {
+            await commerce.checkout
+              .checkShippingOption(checkoutToken.id, {
+                shipping_option_id: shippingOption.id,
+                country: "CA",
+                region: "BC",
+              })
+              .catch((error) => console.log("error", error));
+
+            await commerce.checkout
+              .setTaxZone(checkoutToken.id, {
+                country: "CA",
+                region: "BC",
+                postal_zip_code: methods.getValues("zip"),
+              })
+              .catch((error) => console.log("error", error));
+
             next({
               ...data,
               shippingCountry,
               shippingSubdivision,
               shippingOption,
-            })
-          )}
+            });
+          })}
         >
           <Grid container spacing={3}>
             <FormInput required name="firstName" label="First name" />
@@ -104,9 +122,10 @@ function AdressForm({ checkoutToken, next }) {
             <Grid item xs={12} sm={6}>
               <InputLabel>Shipping Country</InputLabel>
               <Select
+                required
                 variant="standard"
                 name="country"
-                value={shippingCountry}
+                value={shippingCountry || ""}
                 fullWidth
                 onChange={(e) => setShippingCountry(e.target.value)}
               >
@@ -121,9 +140,10 @@ function AdressForm({ checkoutToken, next }) {
             <Grid item xs={12} sm={6}>
               <InputLabel>Shipping Subdivisons</InputLabel>
               <Select
+                required
                 name="provinceState"
                 variant="standard"
-                value={shippingSubdivision}
+                value={shippingSubdivision || ""}
                 fullWidth
                 onChange={(e) => setShippingSubdivision(e.target.value)}
               >
@@ -138,9 +158,10 @@ function AdressForm({ checkoutToken, next }) {
             <Grid item xs={12}>
               <InputLabel>Shipping Options</InputLabel>
               <Select
+                required
                 name="shippingOption"
                 variant="standard"
-                value={shippingOption}
+                value={shippingOption || ""}
                 fullWidth
                 onChange={(e) => setShippingOption(e.target.value)}
               >

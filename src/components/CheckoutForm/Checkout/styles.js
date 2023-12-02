@@ -15,8 +15,8 @@ export const Styles = (theme) => ({
     },
   },
   stepper: {
-    marginTop: "5%",
-    marginBottom: "5%",
+    marginTop: 2,
+    marginBottom: 2,
     display: "flex",
     justifyContent: "center",
   },

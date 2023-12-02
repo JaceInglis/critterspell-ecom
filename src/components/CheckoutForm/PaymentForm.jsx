@@ -1,5 +1,5 @@
-import React from "react";
-import { Typography, Button, Divider, Box } from "@mui/material";
+import React, { useState } from "react";
+import { Typography, Button, Divider, Box, Alert } from "@mui/material";
 import {
   Elements,
   CardElement,
@@ -22,6 +22,9 @@ function PaymentForm({
   nextStep,
 }) {
   const theme = useTheme();
+  console.log(checkoutToken)
+
+  const [alertError, setAlertError] = useState(false);
 
   const handleSubmit = async (event, elements, stripe) => {
     event.preventDefault();
@@ -36,8 +39,9 @@ function PaymentForm({
     });
 
     if (error) {
-      console.error(error);
+      setAlertError(true);
     } else {
+      setAlertError(false);
       const orderData = {
         line_items: checkoutToken.line_items,
         customer: {
@@ -63,13 +67,13 @@ function PaymentForm({
           country: shippingData.shippingCountry,
         },
         payment: {
-          gateway: 'test_gateway',
+          gateway: "test_gateway",
           card: {
-            number: '4242424242424242',
-            expiry_month: '02',
-            expiry_year: '24',
-            cvc: '123',
-            postal_zip_code: '94107',
+            number: "4242424242424242",
+            expiry_month: "02",
+            expiry_year: "24",
+            cvc: "123",
+            postal_zip_code: "94107",
           },
         },
         extra_fields: {
@@ -98,6 +102,11 @@ function PaymentForm({
           {({ stripe, elements }) => (
             <form onSubmit={(e) => handleSubmit(e, elements, stripe)}>
               <CardElement />
+              {alertError && (
+                <Alert severity="error" sx={{ marginTop: 3 }}>
+                  Please enter a valid card.
+                </Alert>
+              )}
               <Box
                 sx={{
                   display: "flex",

@@ -10,7 +10,6 @@ import {
   Step,
   StepLabel,
   Typography,
-  Divider,
   CircularProgress,
   Button,
   Box,
@@ -38,7 +37,9 @@ function Checkout({ cart, order, onCaptureCheckout, error, name }) {
         });
 
         setCheckoutToken(token);
-      } catch (error) {}
+      } catch (error) {
+        console.error("Failed to generate checkout token: ", error)
+      }
     };
 
     generateToken();
@@ -76,37 +77,30 @@ function Checkout({ cart, order, onCaptureCheckout, error, name }) {
 
   const Confrimation = () => (
     <>
-      {order.customer ? (
-        <Box sx={styles.mobile}>
-          <Typography variant="h6">Payment Complete</Typography>
-          <Divider />
-          <Box textAlign="center">
-            <Typography
-              mt={3}
-              mb={3}
-              variant="body1"
-            >{`Thank you for your order ${order.shipping.name}! We have sent you an email regarding your purchase.`}</Typography>
-            <CheckCircleOutlineIcon sx={styles.message} />
-            <Typography mt={3} variant="h6">
-              Order Number:
-            </Typography>
-            <Typography mb={3} fontWeight="700">
-              {order.id}
-            </Typography>
-          </Box>
+      <Box sx={styles.mobile}>
+        <Box textAlign="center">
+          <CheckCircleOutlineIcon sx={styles.message} />
+
+          <Typography variant="h5" fontWeight="700" color="primary">
+            Order Successful
+          </Typography>
+
+          <Typography
+            my={2}
+            fontWeight="700"
+          >{`Thank you for your order Jace!`}</Typography>
+
           <Button
             type="button"
-            variant="contained"
-            color="primary"
+            variant="outlined"
+            color="tertiary"
             component={Link}
             to="/"
           >
             Back Home
           </Button>
         </Box>
-      ) : (
-        <Loading />
-      )}
+      </Box>
     </>
   );
 
