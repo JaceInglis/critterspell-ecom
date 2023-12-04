@@ -65,6 +65,8 @@ const TestName = ({ onAddToCart, cartLoading, products }) => {
   });
   const [boxStyles, setBoxStyles] = useState([]);
 
+  console.log("products", products);
+
   const theme = useTheme();
 
   const product = products[0];
@@ -263,18 +265,30 @@ const TestName = ({ onAddToCart, cartLoading, products }) => {
           })}
       </Box>
       <Box sx={styles.addToCart}>
-        <Box display="flex" justifyContent="center" alignItems="center">
+        <Box
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+          flexDirection={
+            products[0]?.conditionals.is_sold_out ? "column" : "row"
+          }
+        >
           {cartLoading ? (
             <CircularProgress />
           ) : (
             <Button
-              disabled={!name}
+              disabled={!name || products[0]?.conditionals?.is_sold_out}
               onClick={handleAddToCart}
               variant="contained"
               size="large"
             >
               Add to Cart
             </Button>
+          )}
+          {products[0]?.conditionals.is_sold_out && (
+            <Typography fontWeight={700} mt={2}>
+              Sorry we are currently sold out
+            </Typography>
           )}
         </Box>
         {cartLoading !== null && cartLoading !== true ? (

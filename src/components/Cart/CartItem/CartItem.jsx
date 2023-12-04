@@ -11,7 +11,7 @@ import {
 
 import { styles } from "./styles";
 
-function CartItem({ item, onCartRemove, name }) {
+function CartItem({ item, onCartRemove, name, soldOut }) {
   const handleRemoveFromCart = () => onCartRemove(item.id);
 
   return (
@@ -23,14 +23,13 @@ function CartItem({ item, onCartRemove, name }) {
             {item.name}
           </Typography>
           <Typography variant="h5">
-            {item.price.formatted_with_symbol}
+            {soldOut ? "Sold Out" : item.price.formatted_with_symbol}
           </Typography>
         </Box>
       </CardContent>
       <CardActions sx={styles.cardActions}>
         <Typography>{`${name.length > 1 ? "Names" : "Name"}:${name.map(
-          (text) => " " + text.name[0].toUpperCase() +
-          text.name.slice(1)
+          (text) => " " + text.name[0].toUpperCase() + text.name.slice(1)
         )}`}</Typography>
 
         <Button

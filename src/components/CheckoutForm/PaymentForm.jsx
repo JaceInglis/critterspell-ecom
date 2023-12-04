@@ -15,14 +15,15 @@ const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY);
 
 function PaymentForm({
   checkoutToken,
+  checkoutTokenCallback,
   backStep,
   shippingData,
   name,
   onCaptureCheckout,
   nextStep,
+  captureError,
 }) {
   const theme = useTheme();
-  console.log(checkoutToken)
 
   const [alertError, setAlertError] = useState(false);
 
@@ -38,7 +39,7 @@ function PaymentForm({
       card: cardElement,
     });
 
-    if (error) {
+    if (error || captureError) {
       setAlertError(true);
     } else {
       setAlertError(false);
@@ -57,7 +58,7 @@ function PaymentForm({
           postal_zip_code: shippingData.zip,
           country: shippingData.shippingCountry,
         },
-        fulfillment: { shipping_method: shippingData.shippingOption.id },
+        fulfillment: { shipping_method: shippingData.shippingOption },
         billing: {
           name: shippingData.firstName + " " + shippingData.lastName,
           street: shippingData.address1,
@@ -81,18 +82,23 @@ function PaymentForm({
         },
       };
 
-      onCaptureCheckout(checkoutToken.id, orderData);
+      try {
+        await onCaptureCheckout(checkoutToken.id, orderData);
 
-      nextStep();
+        checkoutTokenCallback("");
+
+        nextStep();
+      } catch (error) {
+        setAlertError(error);
+      }
     }
   };
 
+  console.log(alertError);
+
   return (
     <>
-      <Review
-        checkoutToken={checkoutToken}
-        shippingOption={shippingData.shippingOption}
-      />
+      <Review checkoutToken={checkoutToken} />
       <Divider />
       <Typography mb={3} mt={1} variant="h6" gutterBottom>
         Payment method
@@ -104,7 +110,7 @@ function PaymentForm({
               <CardElement />
               {alertError && (
                 <Alert severity="error" sx={{ marginTop: 3 }}>
-                  Please enter a valid card.
+                  Sorry there was an error capturing your order
                 </Alert>
               )}
               <Box

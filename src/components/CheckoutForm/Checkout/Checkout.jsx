@@ -19,9 +19,9 @@ import {
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import { Offset, Styles } from "./styles";
 
-function Checkout({ cart, order, onCaptureCheckout, error, name }) {
+function Checkout({ cart, onCaptureCheckout, name }) {
   const [activeStep, setActiveStep] = useState(0);
-  const [checkoutToken, setCheckoutToken] = useState(null);
+  const [checkoutToken, setCheckoutToken] = useState("");
   const [shippingData, setShippingData] = useState({});
 
   const theme = useTheme();
@@ -29,7 +29,7 @@ function Checkout({ cart, order, onCaptureCheckout, error, name }) {
   const styles = Styles(theme);
 
   useEffect(() => {
-    if (!cart.id) return;
+    if (!cart.id || cart.line_items === 0) return;
     const generateToken = async () => {
       try {
         const token = await commerce.checkout.generateToken(cart.id, {
@@ -38,7 +38,7 @@ function Checkout({ cart, order, onCaptureCheckout, error, name }) {
 
         setCheckoutToken(token);
       } catch (error) {
-        console.error("Failed to generate checkout token: ", error)
+        console.error("Failed to generate checkout token: ", error);
       }
     };
 
@@ -57,11 +57,16 @@ function Checkout({ cart, order, onCaptureCheckout, error, name }) {
 
   const Form = () =>
     activeStep === 0 ? (
-      <AdressForm next={next} checkoutToken={checkoutToken} />
+      <AdressForm
+        next={next}
+        checkoutToken={checkoutToken}
+        checkoutTokenCallback={(token) => setCheckoutToken(token)}
+      />
     ) : (
       <PaymentForm
         nextStep={nextStep}
         onCaptureCheckout={onCaptureCheckout}
+        checkoutTokenCallback={(token) => setCheckoutToken(token)}
         checkoutToken={checkoutToken}
         backStep={backStep}
         shippingData={shippingData}

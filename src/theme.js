@@ -14,6 +14,9 @@ const theme = createTheme({
     quaternary: {
       main: "#f3f3f3",
     },
+    commonBlack: {
+      main: "#000000",
+    },
     info: {
       main: "#a6a6a6",
     },

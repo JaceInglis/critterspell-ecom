@@ -8,6 +8,7 @@ import {
   Grid,
   Typography,
   Box,
+  CircularProgress,
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import { useTheme } from "@mui/material/styles";
@@ -16,7 +17,7 @@ import { commerce } from "../../lib/commerce";
 
 import FormInput from "./CustomTextField";
 
-function AdressForm({ checkoutToken, next }) {
+function AdressForm({ checkoutToken, next, checkoutTokenCallback }) {
   const [shippingCountries, setShippingCountries] = useState([]);
   const [shippingCountry, setShippingCountry] = useState("");
   const [shippingSubdivisions, setShippingSubdivisions] = useState([]);
@@ -24,7 +25,9 @@ function AdressForm({ checkoutToken, next }) {
   const [shippingOptions, setShippingOptions] = useState([]);
   const [shippingOption, setShippingOption] = useState("");
 
-  console.log(shippingOption.id, shippingSubdivision, shippingCountry);
+  console.log(shippingCountries, shippingSubdivisions, shippingOptions)
+
+  const [loading, setLoading] = useState(false);
 
   const methods = useForm();
   const theme = useTheme();
@@ -60,9 +63,8 @@ function AdressForm({ checkoutToken, next }) {
       checkoutTokenId,
       { country: country }
     );
-
     setShippingOptions(shippingOptions);
-    setShippingOption(shippingOptions[0]);
+    setShippingOption(shippingOptions[0].id);
   };
 
   useEffect(() => {
@@ -87,21 +89,27 @@ function AdressForm({ checkoutToken, next }) {
       <FormProvider {...methods}>
         <form
           onSubmit={methods.handleSubmit(async (data) => {
-            await commerce.checkout
-              .checkShippingOption(checkoutToken.id, {
-                shipping_option_id: shippingOption.id,
-                country: "CA",
-                region: "BC",
-              })
-              .catch((error) => console.log("error", error));
+            setLoading(true);
 
             await commerce.checkout
+              .checkShippingOption(checkoutToken.id, {
+                shipping_option_id: shippingOption,
+                country: shippingCountry,
+                region: shippingSubdivision,
+              })
+              .catch((error) => console.error("error", error));
+
+            const taxResponse = await commerce.checkout
               .setTaxZone(checkoutToken.id, {
-                country: "CA",
-                region: "BC",
+                country: shippingCountry,
+                region: shippingSubdivision,
                 postal_zip_code: methods.getValues("zip"),
               })
-              .catch((error) => console.log("error", error));
+              .catch((error) => console.error("error", error));
+
+            checkoutTokenCallback(taxResponse);
+
+            setLoading(false);
 
             next({
               ...data,
@@ -120,7 +128,9 @@ function AdressForm({ checkoutToken, next }) {
             <FormInput required name="zip" label="ZIP / Postal code" />
 
             <Grid item xs={12} sm={6}>
-              <InputLabel>Shipping Country</InputLabel>
+              <InputLabel>
+                {Object.keys(shippingCountry)[0] ? "Shipping Country" : "Loading..."}
+              </InputLabel>
               <Select
                 required
                 variant="standard"
@@ -138,7 +148,11 @@ function AdressForm({ checkoutToken, next }) {
             </Grid>
 
             <Grid item xs={12} sm={6}>
-              <InputLabel>Shipping Subdivisons</InputLabel>
+              <InputLabel>
+                {Object.keys(shippingSubdivisions)[0]
+                  ? "Shipping Subdivisons"
+                  : "Loading..."}
+              </InputLabel>
               <Select
                 required
                 name="provinceState"
@@ -156,7 +170,9 @@ function AdressForm({ checkoutToken, next }) {
             </Grid>
 
             <Grid item xs={12}>
-              <InputLabel>Shipping Options</InputLabel>
+              <InputLabel>
+                {shippingOptions[0] ? "Shipping Options" : "Loading..."}
+              </InputLabel>
               <Select
                 required
                 name="shippingOption"
@@ -166,7 +182,7 @@ function AdressForm({ checkoutToken, next }) {
                 onChange={(e) => setShippingOption(e.target.value)}
               >
                 {shippingOptions.map((option) => (
-                  <MenuItem key={option.id} value={option}>
+                  <MenuItem key={option.id} value={option.id}>
                     {option.description} - {option.price.formatted_with_symbol}
                   </MenuItem>
                 ))}
@@ -193,15 +209,28 @@ function AdressForm({ checkoutToken, next }) {
             >
               Back to cart
             </Button>
-            <Button
-              sx={{ [theme.breakpoints.down("sm")]: { marginBottom: "5px" } }}
-              type="submit"
-              size="large"
-              variant="contained"
-              color="primary"
-            >
-              Next
-            </Button>
+            {loading ? (
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  width: "80px",
+                }}
+              >
+                <CircularProgress size={30} />
+              </Box>
+            ) : (
+              <Button
+                sx={{ [theme.breakpoints.down("sm")]: { marginBottom: "5px" } }}
+                type="submit"
+                size="large"
+                variant="contained"
+                color="primary"
+              >
+                Next
+              </Button>
+            )}
           </Box>
         </form>
       </FormProvider>

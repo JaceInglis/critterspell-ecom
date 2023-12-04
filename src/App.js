@@ -18,8 +18,6 @@ function App() {
   const [name, setName] = useState([]);
   const [cart, setCart] = useState({});
   const [cartLoading, setCartLoading] = useState(null);
-  const [order, setOrder] = useState({});
-  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     const storedName = localStorage.getItem("name");
@@ -72,17 +70,13 @@ function App() {
   };
 
   const handleCaptureCheckout = async (checkoutTokenId, newOrder) => {
-    try {
-      const incomingOrder = await commerce.checkout.capture(
-        checkoutTokenId,
-        newOrder
-      );
+    const incomingOrder = await commerce.checkout.capture(
+      checkoutTokenId,
+      newOrder
+    );
 
-      setOrder(incomingOrder);
-      refreshCart();
-    } catch (error) {
-      setErrorMessage(error.data.error.message);
-    }
+    refreshCart();
+    setCart({});
   };
 
   useEffect(() => {
@@ -127,6 +121,7 @@ function App() {
                       cart={cart}
                       name={name}
                       onCartRemove={handleRemoveFromCart}
+                      soldOut={products[0]?.conditionals.is_sold_out}
                     />
                   }
                 />
@@ -138,9 +133,7 @@ function App() {
                     <Checkout
                       cart={cart}
                       name={name}
-                      order={order}
                       onCaptureCheckout={handleCaptureCheckout}
-                      error={errorMessage}
                     />
                   }
                 />

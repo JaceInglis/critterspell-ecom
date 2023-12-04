@@ -17,8 +17,10 @@ import { useTheme } from "@mui/material/styles";
 import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined";
 import ShoppingBagIcon from "@mui/icons-material/ShoppingBag";
 
-const Cart = ({ cart, onCartRemove, name }) => {
+const Cart = ({ cart, onCartRemove, name, soldOut }) => {
   const theme = useTheme();
+
+  console.log(cart);
 
   const styles = Styles(theme);
 
@@ -66,7 +68,7 @@ const Cart = ({ cart, onCartRemove, name }) => {
       <Grid sx={styles.items} container>
         {cart.line_items.map((item) => (
           <Grid item xs={12} sm={4} key={item.id}>
-            <CartItem item={item} name={name} onCartRemove={onCartRemove} />
+            <CartItem item={item} name={name} onCartRemove={onCartRemove} soldOut={soldOut} />
           </Grid>
         ))}
       </Grid>
@@ -89,6 +91,7 @@ const Cart = ({ cart, onCartRemove, name }) => {
           </Button>
           <Button
             sx={styles.checkoutButton}
+            disabled={soldOut}
             component={Link}
             to="/checkout"
             size="large"

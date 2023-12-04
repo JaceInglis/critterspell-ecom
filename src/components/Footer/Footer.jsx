@@ -59,7 +59,7 @@ const Footer = () => {
               <Link underline="hover" href="tel:250-826-7984">
                 250-826-7984
               </Link>
-              <Link underline="hover" href="mailto:critterspell@fun.com">
+              <Link underline="hover" href="mailto:fun@critterspell.com">
                 critterspell@fun.com
               </Link>
             </Box>
@@ -69,9 +69,18 @@ const Footer = () => {
 
           <Box>
             <Box width="100%" sx={styles.socials}>
-              <FacebookIcon />
-              <InstagramIcon />
-              <TwitterIcon />
+              <Link
+                href="https://www.facebook.com/critterspell"
+                color={theme.palette.commonBlack.main}
+              >
+                <FacebookIcon />
+              </Link>
+              <Link
+                href="https://www.instagram.com/critterspellkidsart"
+                color={theme.palette.commonBlack.main}
+              >
+                <InstagramIcon />
+              </Link>
             </Box>
           </Box>
         </Container>
