@@ -30,4 +30,4 @@ yarn-error.log*
 
 #html
 
-public/index.html
+/public/index.html
