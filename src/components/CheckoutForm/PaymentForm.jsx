@@ -39,7 +39,7 @@ function PaymentForm({
       card: cardElement,
     });
 
-    if (error || captureError) {
+    if (error) {
       setAlertError(true);
     } else {
       setAlertError(false);
@@ -89,12 +89,10 @@ function PaymentForm({
 
         nextStep();
       } catch (error) {
-        setAlertError(error);
+        setAlertError(true);
       }
     }
   };
-
-  console.log(alertError);
 
   return (
     <>

@@ -70,10 +70,7 @@ function App() {
   };
 
   const handleCaptureCheckout = async (checkoutTokenId, newOrder) => {
-    const incomingOrder = await commerce.checkout.capture(
-      checkoutTokenId,
-      newOrder
-    );
+    await commerce.checkout.capture(checkoutTokenId, newOrder);
 
     refreshCart();
     setCart({});

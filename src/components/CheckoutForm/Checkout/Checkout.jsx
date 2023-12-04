@@ -43,7 +43,7 @@ function Checkout({ cart, onCaptureCheckout, name }) {
     };
 
     generateToken();
-  }, [cart.id]);
+  }, [cart.id, cart.line_items]);
 
   const nextStep = () => setActiveStep((prev) => prev + 1);
   const backStep = () => setActiveStep((prev) => prev - 1);

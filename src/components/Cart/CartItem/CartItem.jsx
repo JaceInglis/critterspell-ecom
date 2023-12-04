@@ -29,7 +29,7 @@ function CartItem({ item, onCartRemove, name, soldOut }) {
       </CardContent>
       <CardActions sx={styles.cardActions}>
         <Typography>{`${name.length > 1 ? "Names" : "Name"}:${name.map(
-          (text) => " " + text.name[0].toUpperCase() + text.name.slice(1)
+          (text) => " " + text.name[0].toUpperCase() + text.name.slice(1),
         )}`}</Typography>
 
         <Button

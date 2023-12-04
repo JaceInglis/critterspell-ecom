@@ -7,7 +7,6 @@ import {
   Box,
   Divider,
   useMediaQuery,
-  Alert,
 } from "@mui/material";
 import CartItem from "./CartItem/CartItem";
 import { Link } from "react-router-dom";
@@ -19,8 +18,6 @@ import ShoppingBagIcon from "@mui/icons-material/ShoppingBag";
 
 const Cart = ({ cart, onCartRemove, name, soldOut }) => {
   const theme = useTheme();
-
-  console.log(cart);
 
   const styles = Styles(theme);
 
@@ -68,7 +65,12 @@ const Cart = ({ cart, onCartRemove, name, soldOut }) => {
       <Grid sx={styles.items} container>
         {cart.line_items.map((item) => (
           <Grid item xs={12} sm={4} key={item.id}>
-            <CartItem item={item} name={name} onCartRemove={onCartRemove} soldOut={soldOut} />
+            <CartItem
+              item={item}
+              name={name}
+              onCartRemove={onCartRemove}
+              soldOut={soldOut}
+            />
           </Grid>
         ))}
       </Grid>

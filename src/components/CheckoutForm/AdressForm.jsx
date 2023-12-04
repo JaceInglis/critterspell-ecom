@@ -25,8 +25,6 @@ function AdressForm({ checkoutToken, next, checkoutTokenCallback }) {
   const [shippingOptions, setShippingOptions] = useState([]);
   const [shippingOption, setShippingOption] = useState("");
 
-  console.log(shippingCountries, shippingSubdivisions, shippingOptions)
-
   const [loading, setLoading] = useState(false);
 
   const methods = useForm();
@@ -37,22 +35,20 @@ function AdressForm({ checkoutToken, next, checkoutTokenCallback }) {
     label: name,
   }));
   const subdivisions = Object.entries(shippingSubdivisions).map(
-    ([code, name]) => ({ id: code, label: name })
+    ([code, name]) => ({ id: code, label: name }),
   );
 
   const fetchShippingCountries = async (checkoutTokenId) => {
-    const { countries } = await commerce.services.localeListShippingCountries(
-      checkoutTokenId
-    );
+    const { countries } =
+      await commerce.services.localeListShippingCountries(checkoutTokenId);
 
     setShippingCountries(countries);
     setShippingCountry(Object.keys(countries)[0]);
   };
 
   const fetchSubdivisions = async (country) => {
-    const { subdivisions } = await commerce.services.localeListSubdivisions(
-      country
-    );
+    const { subdivisions } =
+      await commerce.services.localeListSubdivisions(country);
 
     setShippingSubdivisions(subdivisions);
     setShippingSubdivision(Object.keys(subdivisions)[0]);
@@ -61,7 +57,7 @@ function AdressForm({ checkoutToken, next, checkoutTokenCallback }) {
   const fetchShippingMethods = async (checkoutTokenId, country) => {
     const shippingOptions = await commerce.checkout.getShippingOptions(
       checkoutTokenId,
-      { country: country }
+      { country: country },
     );
     setShippingOptions(shippingOptions);
     setShippingOption(shippingOptions[0].id);
@@ -129,7 +125,9 @@ function AdressForm({ checkoutToken, next, checkoutTokenCallback }) {
 
             <Grid item xs={12} sm={6}>
               <InputLabel>
-                {Object.keys(shippingCountry)[0] ? "Shipping Country" : "Loading..."}
+                {Object.keys(shippingCountry)[0]
+                  ? "Shipping Country"
+                  : "Loading..."}
               </InputLabel>
               <Select
                 required

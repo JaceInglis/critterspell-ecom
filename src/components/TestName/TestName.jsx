@@ -65,8 +65,6 @@ const TestName = ({ onAddToCart, cartLoading, products }) => {
   });
   const [boxStyles, setBoxStyles] = useState([]);
 
-  console.log("products", products);
-
   const theme = useTheme();
 
   const product = products[0];
@@ -77,7 +75,7 @@ const TestName = ({ onAddToCart, cartLoading, products }) => {
 
   const removePositionIdentifier = (strWithPosition) => {
     return strWithPosition.map((charWithPosition) =>
-      charWithPosition.charAt(0)
+      charWithPosition.charAt(0),
     );
   };
 
@@ -86,7 +84,7 @@ const TestName = ({ onAddToCart, cartLoading, products }) => {
 
     const removedLettersWithId = _.difference(
       addPositionIdentifier(name),
-      addPositionIdentifier(newName)
+      addPositionIdentifier(newName),
     );
 
     if (removedLettersWithId) {
@@ -145,8 +143,6 @@ const TestName = ({ onAddToCart, cartLoading, products }) => {
   const getLetterStyles = (name) => {
     name.split("").forEach((letter, index) => {
       const prevLetter = index > 0 ? name[index - 1].toLowerCase() : null;
-      const nextLetter =
-        index < name.length - 1 ? name[index + 1].toLowerCase() : null;
 
       let boxStyle = {};
 
