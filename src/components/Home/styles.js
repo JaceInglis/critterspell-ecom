@@ -26,4 +26,8 @@ export const Styles = (theme) => ({
       minWidth: 450,
     },
   },
+  img: {
+    width: "40%",
+    [theme.breakpoints.down("sm")]: { width: "100%" },
+  },
 });

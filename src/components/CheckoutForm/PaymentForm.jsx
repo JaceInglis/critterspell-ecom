@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-import { Typography, Button, Divider, Box, Alert } from "@mui/material";
+import {
+  Typography,
+  Button,
+  Divider,
+  Box,
+  Alert,
+  CircularProgress,
+} from "@mui/material";
 import {
   Elements,
   CardElement,
@@ -10,6 +17,7 @@ import { loadStripe } from "@stripe/stripe-js";
 import { useTheme } from "@mui/material/styles";
 
 import Review from "./Review";
+import { set } from "lodash";
 
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY);
 
@@ -21,11 +29,11 @@ function PaymentForm({
   name,
   onCaptureCheckout,
   nextStep,
-  captureError,
 }) {
   const theme = useTheme();
 
   const [alertError, setAlertError] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (event, elements, stripe) => {
     event.preventDefault();
@@ -83,12 +91,15 @@ function PaymentForm({
       };
 
       try {
+        setLoading(true);
         await onCaptureCheckout(checkoutToken.id, orderData);
+        setLoading(false);
 
         checkoutTokenCallback("");
 
         nextStep();
       } catch (error) {
+        setLoading(false);
         setAlertError(true);
       }
     }
@@ -115,6 +126,7 @@ function PaymentForm({
                 sx={{
                   display: "flex",
                   justifyContent: "space-between",
+                  alignItems: "center",
                   marginTop: 3,
                   [theme.breakpoints.down("sm")]: {
                     flexDirection: "column",
@@ -129,18 +141,31 @@ function PaymentForm({
                 >
                   Back
                 </Button>
-                <Button
-                  sx={{
-                    [theme.breakpoints.down("sm")]: { marginBottom: "5px" },
-                  }}
-                  variant="contained"
-                  type="submit"
-                  color="primary"
-                  size="large"
-                  disabled={!stripe}
-                >
-                  Pay Now
-                </Button>
+                {loading ? (
+                  <Box
+                    sx={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      width: "80px",
+                    }}
+                  >
+                    <CircularProgress size={30} />
+                  </Box>
+                ) : (
+                  <Button
+                    sx={{
+                      [theme.breakpoints.down("sm")]: { marginBottom: "5px" },
+                    }}
+                    variant="contained"
+                    type="submit"
+                    color="primary"
+                    size="large"
+                    disabled={!stripe}
+                  >
+                    Pay Now
+                  </Button>
+                )}
               </Box>
             </form>
           )}

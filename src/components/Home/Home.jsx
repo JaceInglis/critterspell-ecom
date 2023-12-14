@@ -47,7 +47,7 @@ function Home({ products, onAddToCart, cartLoading }) {
             <img
               src="IMG_6043.jpeg"
               alt="Critterspell"
-              width={mobile ? "100%" : 700}
+              style={{ width: mobile ? '100%' : 'auto', maxWidth: 700 }}
             />
           </Box>
         </Box>

@@ -273,7 +273,7 @@ const TestName = ({ onAddToCart, cartLoading, products }) => {
             <CircularProgress />
           ) : (
             <Button
-              disabled={!name || products[0]?.conditionals?.is_sold_out}
+              disabled={!name || product?.conditionals?.is_sold_out}
               onClick={handleAddToCart}
               variant="contained"
               size="large"
