@@ -17,7 +17,6 @@ import { loadStripe } from "@stripe/stripe-js";
 import { useTheme } from "@mui/material/styles";
 
 import Review from "./Review";
-import { set } from "lodash";
 
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY);
 

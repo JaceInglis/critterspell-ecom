@@ -29,7 +29,8 @@ function Checkout({ cart, onCaptureCheckout, name }) {
   const styles = Styles(theme);
 
   useEffect(() => {
-    if (!cart.id || cart.line_items === 0) return;
+    if (!cart.line_items?.[0]) return;
+
     const generateToken = async () => {
       try {
         const token = await commerce.checkout.generateToken(cart.id, {
@@ -43,7 +44,7 @@ function Checkout({ cart, onCaptureCheckout, name }) {
     };
 
     generateToken();
-  }, [cart.id, cart.line_items]);
+  }, [cart.line_items, cart.id]);
 
   const nextStep = () => setActiveStep((prev) => prev + 1);
   const backStep = () => setActiveStep((prev) => prev - 1);
