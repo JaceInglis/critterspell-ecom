@@ -107,7 +107,6 @@ function PaymentForm({
         );
 
         if (cardActionResult.error) {
-          alert(cardActionResult.error.message);
           setLoading(false);
           setAlertError(true);
           return;
@@ -132,7 +131,6 @@ function PaymentForm({
 
           return;
         } catch (response) {
-          alert(response.message);
           setLoading(false);
           setAlertError(true);
         }

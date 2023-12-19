@@ -75,7 +75,7 @@ const TestName = ({ onAddToCart, cartLoading, products }) => {
 
   const removePositionIdentifier = (strWithPosition) => {
     return strWithPosition.map((charWithPosition) =>
-      charWithPosition.charAt(0),
+      charWithPosition.charAt(0)
     );
   };
 
@@ -84,7 +84,7 @@ const TestName = ({ onAddToCart, cartLoading, products }) => {
 
     const removedLettersWithId = _.difference(
       addPositionIdentifier(name),
-      addPositionIdentifier(newName),
+      addPositionIdentifier(newName)
     );
 
     if (removedLettersWithId) {
@@ -148,9 +148,16 @@ const TestName = ({ onAddToCart, cartLoading, products }) => {
 
       if (
         ["t", "y"].includes(letter) &&
-        ["a", "q", "o", "c", "m"].includes(prevLetter)
+        ["a", "q", "o", "c", "m", "j"].includes(prevLetter)
       ) {
         boxStyle = { ...boxStyle, marginLeft: "-20px" };
+      }
+
+      if (
+        ["t", "y", "d", "f", "u", "k", "z", "v", "b", "n"].includes(letter) &&
+        prevLetter === "j"
+      ) {
+        boxStyle = { ...boxStyle, marginLeft: "10px" };
       }
 
       if (letter === "r") {
@@ -176,6 +183,10 @@ const TestName = ({ onAddToCart, cartLoading, products }) => {
 
       if (letter === "e" && !["t", "y", "j"].includes(prevLetter)) {
         boxStyle = { ...boxStyle, marginLeft: "5px" };
+      }
+
+      if (["a", "q"].includes(letter) && ["j"].includes(prevLetter)) {
+        boxStyle = { ...boxStyle, marginLeft: "-10px" };
       }
 
       if (
