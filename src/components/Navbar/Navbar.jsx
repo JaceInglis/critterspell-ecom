@@ -10,8 +10,14 @@ const Navbar = ({ totalItems }) => {
     <>
       <AppBar position="fixed" sx={styles.appBar} color="inherit">
         <Toolbar>
-          <Box sx={styles.image} component={Link} to="/">
-            <img src="CritterspellLogo.png" alt="Critterspell" height="55px" />
+          <Box sx={styles.grow}>
+            <Box component={Link} to="/" sx={styles.container}>
+              <img
+                src="CritterspellLogo.png"
+                alt="Critterspell"
+                height="55px"
+              />
+            </Box>
           </Box>
           <IconButton
             component={Link}

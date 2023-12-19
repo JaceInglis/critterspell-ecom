@@ -74,16 +74,6 @@ function PaymentForm({
           postal_zip_code: shippingData.zip,
           country: shippingData.shippingCountry,
         },
-        payment: {
-          gateway: "test_gateway",
-          card: {
-            number: "4242424242424242",
-            expiry_month: "02",
-            expiry_year: "24",
-            cvc: "123",
-            postal_zip_code: "94107",
-          },
-        },
         extra_fields: {
           extr_VPvL5zjd35AQkX: JSON.stringify(name, null, 4),
         },
@@ -91,15 +81,61 @@ function PaymentForm({
 
       try {
         setLoading(true);
-        await onCaptureCheckout(checkoutToken.id, orderData);
+        await onCaptureCheckout(checkoutToken.id, {
+          ...orderData,
+          payment: {
+            gateway: "stripe",
+            stripe: {
+              payment_method_id: paymentMethod.id,
+            },
+          },
+        });
         setLoading(false);
-
         checkoutTokenCallback("");
+      } catch (response) {
+        if (
+          response.statusCode !== 402 ||
+          response.data.error.type !== "requires_verification"
+        ) {
+          setLoading(false);
+          setAlertError(true);
+          return;
+        }
 
-        nextStep();
-      } catch (error) {
-        setLoading(false);
-        setAlertError(true);
+        const cardActionResult = await stripe.handleCardAction(
+          response.data.error.param
+        );
+
+        if (cardActionResult.error) {
+          alert(cardActionResult.error.message);
+          setLoading(false);
+          setAlertError(true);
+          return;
+        }
+
+        try {
+          await onCaptureCheckout(checkoutToken.id, {
+            ...orderData,
+            payment: {
+              gateway: "stripe",
+              stripe: {
+                payment_intent_id: cardActionResult.paymentIntent.id,
+              },
+            },
+          });
+
+          setLoading(false);
+
+          checkoutTokenCallback("");
+
+          nextStep();
+
+          return;
+        } catch (response) {
+          alert(response.message);
+          setLoading(false);
+          setAlertError(true);
+        }
       }
     }
   };
@@ -147,6 +183,9 @@ function PaymentForm({
                       justifyContent: "center",
                       alignItems: "center",
                       width: "80px",
+                      [theme.breakpoints.down("sm")]: {
+                        width: "100%",
+                      },
                     }}
                   >
                     <CircularProgress size={30} />

@@ -10,6 +10,7 @@ export const Styles = (theme) => ({
   paper: {
     padding: theme.spacing(3),
     margin: theme.spacing(4),
+    width: "70%",
     [theme.breakpoints.up("sm")]: {
       width: "75%",
     },

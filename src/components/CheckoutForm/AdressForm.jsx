@@ -35,7 +35,7 @@ function AdressForm({ checkoutToken, next, checkoutTokenCallback }) {
     label: name,
   }));
   const subdivisions = Object.entries(shippingSubdivisions).map(
-    ([code, name]) => ({ id: code, label: name }),
+    ([code, name]) => ({ id: code, label: name })
   );
 
   const fetchShippingCountries = async (checkoutTokenId) => {
@@ -57,7 +57,7 @@ function AdressForm({ checkoutToken, next, checkoutTokenCallback }) {
   const fetchShippingMethods = async (checkoutTokenId, country) => {
     const shippingOptions = await commerce.checkout.getShippingOptions(
       checkoutTokenId,
-      { country: country },
+      { country: country }
     );
     setShippingOptions(shippingOptions);
     setShippingOption(shippingOptions[0].id);
@@ -85,34 +85,37 @@ function AdressForm({ checkoutToken, next, checkoutTokenCallback }) {
       <FormProvider {...methods}>
         <form
           onSubmit={methods.handleSubmit(async (data) => {
-            setLoading(true);
+            try {
+              setLoading(true);
 
-            await commerce.checkout
-              .checkShippingOption(checkoutToken.id, {
+              await commerce.checkout.checkShippingOption(checkoutToken.id, {
                 shipping_option_id: shippingOption,
                 country: shippingCountry,
                 region: shippingSubdivision,
-              })
-              .catch((error) => console.error("error", error));
+              });
 
-            const taxResponse = await commerce.checkout
-              .setTaxZone(checkoutToken.id, {
-                country: shippingCountry,
-                region: shippingSubdivision,
-                postal_zip_code: methods.getValues("zip"),
-              })
-              .catch((error) => console.error("error", error));
+              const taxResponse = await commerce.checkout.setTaxZone(
+                checkoutToken.id,
+                {
+                  country: shippingCountry,
+                  region: shippingSubdivision,
+                  postal_zip_code: methods.getValues("zip"),
+                }
+              );
 
-            checkoutTokenCallback(taxResponse);
+              setLoading(false);
 
-            setLoading(false);
+              checkoutTokenCallback(taxResponse);
 
-            next({
-              ...data,
-              shippingCountry,
-              shippingSubdivision,
-              shippingOption,
-            });
+              next({
+                ...data,
+                shippingCountry,
+                shippingSubdivision,
+                shippingOption,
+              });
+            } catch (error) {
+              console.error("Error setting address details", error);
+            }
           })}
         >
           <Grid container spacing={3}>
@@ -214,6 +217,9 @@ function AdressForm({ checkoutToken, next, checkoutTokenCallback }) {
                   justifyContent: "center",
                   alignItems: "center",
                   width: "80px",
+                  [theme.breakpoints.down("sm")]: {
+                    width: "100%",
+                  },
                 }}
               >
                 <CircularProgress size={30} />

@@ -2,6 +2,7 @@ import React from "react";
 import { Typography, List, ListItem, ListItemText } from "@mui/material";
 
 const Review = ({ checkoutToken }) => {
+  console.log(checkoutToken);
   return (
     <>
       <Typography variant="h6">Order summary</Typography>
@@ -54,7 +55,7 @@ const Review = ({ checkoutToken }) => {
         >
           <ListItemText primary="Total" />
           <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>
-            {checkoutToken.total_due.formatted_with_symbol}
+            ${checkoutToken.total_due.formatted_with_code}
           </Typography>
         </ListItem>
       </List>
