@@ -71,9 +71,6 @@ function App() {
 
   const handleCaptureCheckout = async (checkoutTokenId, newOrder) => {
     await commerce.checkout.capture(checkoutTokenId, newOrder);
-
-    refreshCart();
-    setCart({});
   };
 
   useEffect(() => {
@@ -130,6 +127,7 @@ function App() {
                     <Checkout
                       cart={cart}
                       name={name}
+                      onCartRefresh={refreshCart}
                       onCaptureCheckout={handleCaptureCheckout}
                     />
                   }

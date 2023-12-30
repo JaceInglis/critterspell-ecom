@@ -22,11 +22,11 @@ const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY);
 
 function PaymentForm({
   checkoutToken,
-  checkoutTokenCallback,
   backStep,
   shippingData,
   name,
   onCaptureCheckout,
+  onCartRefresh,
   nextStep,
 }) {
   const theme = useTheme();
@@ -91,7 +91,8 @@ function PaymentForm({
           },
         });
         setLoading(false);
-        checkoutTokenCallback("");
+        onCartRefresh();
+        nextStep();
       } catch (response) {
         if (
           response.statusCode !== 402 ||
@@ -125,7 +126,7 @@ function PaymentForm({
 
           setLoading(false);
 
-          checkoutTokenCallback("");
+          onCartRefresh();
 
           nextStep();
 

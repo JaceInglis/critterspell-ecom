@@ -19,7 +19,7 @@ import {
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import { Offset, Styles } from "./styles";
 
-function Checkout({ cart, onCaptureCheckout, name }) {
+function Checkout({ cart, onCaptureCheckout, name, onCartRefresh }) {
   const [activeStep, setActiveStep] = useState(0);
   const [checkoutToken, setCheckoutToken] = useState("");
   const [shippingData, setShippingData] = useState({});
@@ -49,7 +49,10 @@ function Checkout({ cart, onCaptureCheckout, name }) {
   const nextStep = () => setActiveStep((prev) => prev + 1);
   const backStep = () => setActiveStep((prev) => prev - 1);
 
-  const next = (data) => {
+  const next = (data, newToken) => {
+    if (newToken) {
+      setCheckoutToken(newToken);
+    }
     setShippingData(data);
     nextStep();
   };
@@ -61,13 +64,12 @@ function Checkout({ cart, onCaptureCheckout, name }) {
       <AdressForm
         next={next}
         checkoutToken={checkoutToken}
-        checkoutTokenCallback={(token) => setCheckoutToken(token)}
       />
     ) : (
       <PaymentForm
         nextStep={nextStep}
         onCaptureCheckout={onCaptureCheckout}
-        checkoutTokenCallback={(token) => setCheckoutToken(token)}
+        onCartRefresh={onCartRefresh}
         checkoutToken={checkoutToken}
         backStep={backStep}
         shippingData={shippingData}

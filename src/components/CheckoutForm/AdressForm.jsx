@@ -17,7 +17,7 @@ import { commerce } from "../../lib/commerce";
 
 import FormInput from "./CustomTextField";
 
-function AdressForm({ checkoutToken, next, checkoutTokenCallback }) {
+function AdressForm({ checkoutToken, next }) {
   const [shippingCountries, setShippingCountries] = useState([]);
   const [shippingCountry, setShippingCountry] = useState("");
   const [shippingSubdivisions, setShippingSubdivisions] = useState([]);
@@ -38,45 +38,53 @@ function AdressForm({ checkoutToken, next, checkoutTokenCallback }) {
     ([code, name]) => ({ id: code, label: name })
   );
 
-  const fetchShippingCountries = async (checkoutTokenId) => {
-    const { countries } =
-      await commerce.services.localeListShippingCountries(checkoutTokenId);
-
-    setShippingCountries(countries);
-    setShippingCountry(Object.keys(countries)[0]);
-  };
-
-  const fetchSubdivisions = async (country) => {
-    const { subdivisions } =
-      await commerce.services.localeListSubdivisions(country);
-
-    setShippingSubdivisions(subdivisions);
-    setShippingSubdivision(Object.keys(subdivisions)[0]);
-  };
-
-  const fetchShippingMethods = async (checkoutTokenId, country) => {
-    const shippingOptions = await commerce.checkout.getShippingOptions(
-      checkoutTokenId,
-      { country: country }
-    );
-    setShippingOptions(shippingOptions);
-    setShippingOption(shippingOptions[0].id);
-  };
-
   useEffect(() => {
-    fetchShippingCountries(checkoutToken.id);
+    let isMounted = true;
+
+    const fetchShippingCountries = async () => {
+      const { countries } =
+        await commerce.services.localeListShippingCountries(checkoutToken.id);
+
+      if (isMounted) {
+        setShippingCountries(countries);
+        setShippingCountry(Object.keys(countries)[0]);
+      }
+    };
+
+    fetchShippingCountries();
+
+    return () => {
+      isMounted = false;
+    };
   }, [checkoutToken.id]);
 
   useEffect(() => {
-    if (!shippingCountry) return;
+    let isMounted = true;
+
     const fetchData = async () => {
-      await Promise.all([
-        fetchSubdivisions(shippingCountry),
-        fetchShippingMethods(checkoutToken.id, shippingCountry),
-      ]);
+      if (!shippingCountry) return;
+
+      const { subdivisions } =
+        await commerce.services.localeListSubdivisions(shippingCountry);
+
+      const shippingOptions = await commerce.checkout.getShippingOptions(
+        checkoutToken.id,
+        { country: shippingCountry }
+      );
+
+      if (isMounted) {
+        setShippingSubdivisions(subdivisions);
+        setShippingSubdivision(Object.keys(subdivisions)[0]);
+        setShippingOptions(shippingOptions);
+        setShippingOption(shippingOptions[0].id);
+      }
     };
 
     fetchData();
+
+    return () => {
+      isMounted = false;
+    };
   }, [shippingCountry, checkoutToken.id]);
 
   return (
@@ -105,14 +113,15 @@ function AdressForm({ checkoutToken, next, checkoutTokenCallback }) {
 
               setLoading(false);
 
-              checkoutTokenCallback(taxResponse);
-
-              next({
-                ...data,
-                shippingCountry,
-                shippingSubdivision,
-                shippingOption,
-              });
+              next(
+                {
+                  ...data,
+                  shippingCountry,
+                  shippingSubdivision,
+                  shippingOption,
+                },
+                taxResponse
+              );
             } catch (error) {
               console.error("Error setting address details", error);
             }
