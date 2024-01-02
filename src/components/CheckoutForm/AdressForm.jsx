@@ -216,6 +216,7 @@ function AdressForm({ checkoutToken, next }) {
               size="large"
               variant="text"
               color="tertiary"
+              paddingBottom={1}
             >
               Back to cart
             </Button>

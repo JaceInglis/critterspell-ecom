@@ -172,6 +172,7 @@ function PaymentForm({
                   color="tertiary"
                   size="large"
                   onClick={backStep}
+                  paddingBottom={1}
                 >
                   Back
                 </Button>

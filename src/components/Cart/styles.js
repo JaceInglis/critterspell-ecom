@@ -30,7 +30,9 @@ export const Styles = (theme) => ({
   },
   backFull: {
     minWidth: 150,
-    marginRight: theme.spacing(4),
+    [theme.breakpoints.up("sm")]: {
+      marginRight: theme.spacing(4),
+    },
     textAlign: "center",
   },
   backEmpty: {
@@ -48,6 +50,11 @@ export const Styles = (theme) => ({
   buttons: {
     display: "flex",
     justifyContent: "center",
+    [theme.breakpoints.down("sm")]: {
+      flexDirection: "column",
+      alignItems: "center",
+      gap: 1,
+    },
   },
   divider: {
     width: "70%",
