@@ -1,17 +1,33 @@
-import { styled } from "@mui/material/styles" 
+import { styled } from "@mui/material/styles";
+export const Offset = styled("div")(({ theme }) => theme.mixins.toolbar);
 
-export const Offset = styled('div')(({ theme }) => theme.mixins.toolbar);
-
-export const styles = {
-    container: {
-        width: '100%',
-        display: 'flex',
-        flexDirection: 'column',
-        minHeight: '100vh',
-        padding: '0px',
-        margin: '0px',
+export const Styles = (theme) => ({
+  container: {
+    width: "100%",
+    display: "flex",
+    flexDirection: "column",
+    padding: "0px",
+    margin: "0px",
+  },
+  content: {
+    display: "flex",
+    [theme.breakpoints.down("sm")]: {
+      flexDirection: "column-reverse",
+      alignItems: "space-between",
     },
-    content: {
-        marginBottom: '5%'
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  wrapper: {
+    backgroundColor: theme.palette.quaternary.main,
+  },
+  product: {
+    [theme.breakpoints.up("sm")]: {
+      minWidth: 450,
     },
-}
+  },
+  img: {
+    width: "40%",
+    [theme.breakpoints.down("sm")]: { width: "100%" },
+  },
+});

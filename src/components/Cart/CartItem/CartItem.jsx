@@ -1,36 +1,48 @@
+import React from "react";
+import {
+  Box,
+  Typography,
+  Button,
+  Card,
+  CardActions,
+  CardContent,
+  CardMedia,
+} from "@mui/material";
 
-import React from 'react'
-import { Box, Typography, Button, Card, CardActions, CardContent, CardMedia } from '@mui/material';
+import { styles } from "./styles";
 
-import { styles } from './styles'
-
-function CartItem({ item, onCartUpdate, onCartRemove }) {
-
+function CartItem({ item, onCartRemove, name, soldOut }) {
   const handleRemoveFromCart = () => onCartRemove(item.id);
 
   return (
     <Card sx={styles.root}>
-        <CardMedia sx={styles.media} title={item.name} image={item.image.url} />
-        <CardContent>
+      <CardMedia sx={styles.media} title={item.name} image={item.image.url} />
+      <CardContent>
         <Box sx={styles.cardContent}>
-                    <Typography variant='h5' gutterBottom>
-                        {item.name}
-                    </Typography>
-                    <Typography variant='h5'>
-                        {item.price.formatted_with_symbol}
-                    </Typography>
-                </Box>
-        </CardContent>
-        <CardActions sx={styles.cardActions}>
-            <Box sx={styles.buttons}>
-                <Button onClick={() => onCartUpdate(item.id, item.quantity + 1)} type='button' size='small'>+</Button>
-                <Typography variant='h6'>{item.quantity}</Typography>
-                <Button onClick={() => onCartUpdate(item.id, item.quantity - 1)} type='button' size='small'>-</Button>
-            </Box>
-            <Button onClick={handleRemoveFromCart} type='button' size='small'>Remove</Button>
-        </CardActions>
+          <Typography variant="h5" gutterBottom>
+            {item.name}
+          </Typography>
+          <Typography variant="h5">
+            {soldOut ? "Sold Out" : item.price.formatted_with_symbol}
+          </Typography>
+        </Box>
+      </CardContent>
+      <CardActions sx={styles.cardActions}>
+        <Typography>{`${name.length > 1 ? "Names" : "Name"}:${name.map(
+          (text) => " " + text.name[0].toUpperCase() + text.name.slice(1),
+        )}`}</Typography>
+
+        <Button
+          onClick={handleRemoveFromCart}
+          type="button"
+          size="small"
+          color="tertiary"
+        >
+          Remove
+        </Button>
+      </CardActions>
     </Card>
-  )
+  );
 }
 
-export default CartItem
+export default CartItem;
